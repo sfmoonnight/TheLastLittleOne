@@ -33,17 +33,17 @@ public class UpperArm : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.A))
         {
             rotateSpeed = -maxRotateSpeed;
             UpdateMotorSpeed();
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.D))
         {
             rotateSpeed = maxRotateSpeed;
             UpdateMotorSpeed();
         }
-        if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
+        if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
         {
             rotateSpeed = 0;
             UpdateMotorSpeed();

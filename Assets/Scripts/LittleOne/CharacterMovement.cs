@@ -6,6 +6,7 @@ public class CharacterMovement : MonoBehaviour
 {
     Rigidbody2D character;
     public float speed;
+    public bool onGround;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,21 +16,27 @@ public class CharacterMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
             Move(-speed);
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
             Move(speed);
         }
+
     }
 
     void Move(float force)
     {
         print("IN");
+        if (onGround)
+        {
+            character.AddForce(Vector2.right * force);
+        }
         //character.velocity = Vector2.right * force;
-        character.AddForce(Vector2.right * force);
+
         //character.position = character.position + Vector2.right * force;
     }
+
 }
