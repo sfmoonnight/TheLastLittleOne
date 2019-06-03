@@ -9,7 +9,9 @@ public class UpperArm : MonoBehaviour
     FixedJoint2D fixedJoint;
     JointMotor2D motorUpper;
     JointMotor2D motorFore;
-    public GameObject foreArmPivot;
+    public GameObject foreArm;
+    public GameObject littleOne;
+    public Camera camera;
     public float foreJointAngle;
     public float upperJointAngle;
 
@@ -33,25 +35,65 @@ public class UpperArm : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        //-----Control by keyboard:
+        /*if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             rotateSpeed = -maxRotateSpeed;
             UpdateMotorSpeed();
         }
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             rotateSpeed = maxRotateSpeed;
             UpdateMotorSpeed();
         }
-        if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
+        if (Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.DownArrow))
         {
             rotateSpeed = 0;
             UpdateMotorSpeed();
+        }*/
+
+        //-----Control by mouse:
+        /*if (Input.GetAxis("Mouse X") > 0.5)
+        {
+            rotateSpeed = maxRotateSpeed;
+            UpdateMotorSpeed();
         }
+        if (Input.GetAxis("Mouse X") < -0.5)
+        {
+            rotateSpeed = -maxRotateSpeed;
+            UpdateMotorSpeed();
+        }
+        if (Input.GetAxis("Mouse Y") > 0.5  && gameObject.transform.rotation.z < 0)
+        {
+            rotateSpeed = -maxRotateSpeed;
+            UpdateMotorSpeed();
+        }
+        if (Input.GetAxis("Mouse Y") > 0.5 && gameObject.transform.rotation.z > 0)
+        {
+            rotateSpeed = maxRotateSpeed;
+            UpdateMotorSpeed();
+        }
+        if (Input.GetAxis("Mouse Y") < -0.5 && gameObject.transform.rotation.z < 0)
+        {
+            rotateSpeed = maxRotateSpeed;
+            UpdateMotorSpeed();
+        }
+        if (Input.GetAxis("Mouse Y") < -0.5 && gameObject.transform.rotation.z > 0)
+        {
+            rotateSpeed = -maxRotateSpeed;
+            UpdateMotorSpeed();
+        }
+        if (Input.GetAxis("Mouse Y") < 0.5 && Input.GetAxis("Mouse Y") > -0.5 && Input.GetAxis("Mouse X") < 0.5 && Input.GetAxis("Mouse X") > -0.5)
+        {
+            rotateSpeed = 0;
+            UpdateMotorSpeed();
+        }*/
 
+        //print((foreArm.transform.rotation.z/1) * 90);
 
+        TurnArm();
 
-        tuneUpperArm();
+        TuneUpperArm();
     }
 
     void UpdateMotorSpeed()
@@ -62,7 +104,7 @@ public class UpperArm : MonoBehaviour
 
     }
 
-    void tuneUpperArm()
+    void TuneUpperArm()
     {
         foreJointAngle = hingeJointFore.jointAngle;
         upperJointAngle = hingeJointUpper.jointAngle;
@@ -86,47 +128,44 @@ public class UpperArm : MonoBehaviour
         hingeJointFore.motor = motorFore;
     }
 
-
-    void RotateArmClockwise()
+    void TurnArm()
     {
-        //print(hingeJointUpper.transform.rotation.z);
+        Vector3 mousePos = Input.mousePosition;
+        Vector3 forarmPos = foreArm.transform.position;
+        Vector3 forarmScreenPos = camera.WorldToScreenPoint(forarmPos);
 
 
-        //if (hingeJointUpper.transform.rotation.z < 0.7)
-        //{
-            //transform.Rotate(Vector3.forward);
-            motorUpper.motorSpeed = -rotateSpeed;
-            hingeJointUpper.motor = motorUpper;
 
-            //foreArmPivot.transform.Rotate(Vector3.forward);
-            //motorFore.motorSpeed = -rotateSpeed;
-            //hingeJointFore.motor = motorFore;
-        //}
+        float currentAngle = Quaternion.Angle(foreArm.transform.rotation, Quaternion.identity);
+        if(gameObject.transform.rotation.z < 0)
+        {
+            currentAngle = -currentAngle;
+        }
 
-        //Mathf.Clamp(transform.rotation.eulerAngles.z, -90f, 90f);
-        //motor.motorSpeed = 5;
-        //rb.AddTorque(5);
+        //print(mousePos + " " + robotScreenPos);
+
+        float expectedAngle = Vector2.SignedAngle(Vector2.up, mousePos - forarmScreenPos);
+
+        print("currentAngle:" + currentAngle + "  " + "expectedAngle:" + expectedAngle);
+
+        //Force depends on angleDifferent, decrease the denominator to increase the force
+        float angleDifferent = Mathf.Abs(expectedAngle - currentAngle)/120;
+
+        if(-170 < expectedAngle && expectedAngle < 170)
+        {
+            if (expectedAngle > currentAngle)
+            {
+                rotateSpeed = -maxRotateSpeed * angleDifferent;
+            }
+            else
+            {
+                rotateSpeed = maxRotateSpeed * angleDifferent;
+            }
+            UpdateMotorSpeed();
+        }
     }
 
-    void RotateArmConterClockwise()
-    {
-        //print("rotating");
-        //print(hingeJointUpper.transform.rotation.z);
-       //if (hingeJointUpper.transform.rotation.z > -0.7)
-        //{
-            //transform.Rotate(Vector3.back);
-            motorUpper.motorSpeed = rotateSpeed;
-            hingeJointUpper.motor = motorUpper;
 
-            //foreArmPivot.transform.Rotate(Vector3.back);
-            //motorFore.motorSpeed = rotateSpeed;
-            //hingeJointFore.motor = motorFore;
-        //}
-
-        //Mathf.Clamp(transform.rotation.z, -0.25f, 0.25f);
-        //motor.motorSpeed = 5;
-        //rb.AddTorque(5);
-    }
 
     void StopMotors()
     {
