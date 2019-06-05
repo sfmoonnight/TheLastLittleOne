@@ -19,6 +19,8 @@ public class UpperArm : MonoBehaviour
     public float maxRotateSpeed;
     public float foreTarget;
 
+    Vector3 pointerLastPos;
+
     //Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
@@ -31,6 +33,8 @@ public class UpperArm : MonoBehaviour
         motorFore = hingeJointFore.motor;
         motorUpper.motorSpeed = 0;
         motorFore.motorSpeed = 0;
+
+        pointerLastPos = Input.mousePosition;
     }
 
     private void Update()
@@ -93,7 +97,6 @@ public class UpperArm : MonoBehaviour
 
         TurnArm();
 
-        TuneUpperArm();
     }
 
     void UpdateMotorSpeed()
@@ -104,7 +107,7 @@ public class UpperArm : MonoBehaviour
 
     }
 
-    void TuneUpperArm()
+    void TuneUpperArm1()
     {
         foreJointAngle = hingeJointFore.jointAngle;
         upperJointAngle = hingeJointUpper.jointAngle;
@@ -128,19 +131,26 @@ public class UpperArm : MonoBehaviour
         hingeJointFore.motor = motorFore;
     }
 
+    void TuneUpperArm2()
+    {
+        foreTarget = -hingeJointUpper.jointAngle;
+        //float error = hingeJointFore.jointAngle - foreTarget;
+        //motorFore.motorSpeed = -15 * error;
+        hingeJointFore.motor = motorFore;
+    }
+
     void TurnArm()
     {
         Vector3 mousePos = Input.mousePosition;
         Vector3 forarmPos = foreArm.transform.position;
         Vector3 forarmScreenPos = camera.WorldToScreenPoint(forarmPos);
-
-
+        Vector3 upperarmScreenPos = camera.WorldToScreenPoint(transform.position);
 
         float currentAngle = Quaternion.Angle(foreArm.transform.rotation, Quaternion.identity);
         if(gameObject.transform.rotation.z < 0)
         {
             currentAngle = -currentAngle;
-        }
+        } 
 
         //print(mousePos + " " + robotScreenPos);
 
@@ -161,8 +171,31 @@ public class UpperArm : MonoBehaviour
             {
                 rotateSpeed = maxRotateSpeed * angleDifferent;
             }
+
+            TuneUpperArm1();
             UpdateMotorSpeed();
         }
+        if(-170 >= expectedAngle || expectedAngle >= 170)
+        {
+            Vector3 pointerCurrentPos = mousePos;
+            float angle = Vector2.SignedAngle(pointerLastPos, pointerCurrentPos);
+            float deltaAngle = Vector2.Angle(mousePos, upperarmScreenPos)/120;
+            if (angle >= 0)
+            {
+                rotateSpeed = maxRotateSpeed * deltaAngle;
+            }
+            else
+            {
+                rotateSpeed = -maxRotateSpeed * deltaAngle;
+            }
+
+            TuneUpperArm2();
+            UpdateMotorSpeed();
+        }
+
+        pointerLastPos = mousePos;
+
+
     }
 
 
