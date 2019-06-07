@@ -10,6 +10,8 @@ public class UpperArm : MonoBehaviour
     JointMotor2D motorUpper;
     JointMotor2D motorFore;
     public GameObject foreArm;
+    //public GameObject foreArmTip;
+    //public GameObject foreArmPivot;
     public GameObject littleOne;
     public Camera camera;
     public float foreJointAngle;
@@ -96,7 +98,7 @@ public class UpperArm : MonoBehaviour
         //print((foreArm.transform.rotation.z/1) * 90);
 
         TurnArm();
-
+        TuneUpperArm1();
     }
 
     void UpdateMotorSpeed()
@@ -141,23 +143,38 @@ public class UpperArm : MonoBehaviour
 
     void TurnArm()
     {
-        Vector3 mousePos = Input.mousePosition;
-        Vector3 forarmPos = foreArm.transform.position;
-        Vector3 forarmScreenPos = camera.WorldToScreenPoint(forarmPos);
-        Vector3 upperarmScreenPos = camera.WorldToScreenPoint(transform.position);
+        Vector2 mousePos = Input.mousePosition;
+        Vector2 mouseWorldPos = camera.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 forearmPos = foreArm.transform.position;
+        Vector2 forearmScreenPos = camera.WorldToScreenPoint(forearmPos);
+        Vector2 upperarmScreenPos = camera.WorldToScreenPoint(transform.position);
 
+        
+
+        //print(mousePos + " " + robotScreenPos);
+
+        
+
+        
+        Vector2 expectedDirection = (mouseWorldPos - forearmPos).normalized;
+        //Vector2 expectedDirection =  (mousePos - forearmScreenPos);
+        //Vector2 currentDirection = camera.WorldToScreenPoint(foreArmTip.transform.position - foreArmPivot.transform.position);
+        Vector2 currentDirection = foreArm.transform.up;
+        print(currentDirection + "  " + expectedDirection);
+
+        float deltaAngle = Vector2.SignedAngle(currentDirection, expectedDirection);
+
+        rotateSpeed = -maxRotateSpeed * deltaAngle / 120;
+
+        UpdateMotorSpeed();
+        /*
         float currentAngle = Quaternion.Angle(foreArm.transform.rotation, Quaternion.identity);
+        float expectedAngle = Vector2.SignedAngle(Vector2.up, mousePos - forearmScreenPos);
         if(gameObject.transform.rotation.z < 0)
         {
             currentAngle = -currentAngle;
         } 
-
-        //print(mousePos + " " + robotScreenPos);
-
-        float expectedAngle = Vector2.SignedAngle(Vector2.up, mousePos - forarmScreenPos);
-
-        print("currentAngle:" + currentAngle + "  " + "expectedAngle:" + expectedAngle);
-
+        //print("currentAngle:" + currentAngle + "  " + "expectedAngle:" + expectedAngle);
         //Force depends on angleDifferent, decrease the denominator to increase the force
         float angleDifferent = Mathf.Abs(expectedAngle - currentAngle)/120;
 
@@ -194,7 +211,7 @@ public class UpperArm : MonoBehaviour
         }
 
         pointerLastPos = mousePos;
-
+        */
 
     }
 
