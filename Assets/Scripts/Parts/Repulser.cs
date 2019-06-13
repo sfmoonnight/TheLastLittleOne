@@ -5,6 +5,7 @@ using UnityEngine;
 public class Repulser : Part
 {
     public float force;
+    public GameObject tip;
 
     //GameObject forearm;
     Rigidbody2D body;
@@ -34,6 +35,13 @@ public class Repulser : Part
         {
             body.AddForce(-transform.up * force, ForceMode2D.Impulse);
             armEnergy -= energyCost;
+            PlayAnimation();
         }
+    }
+
+    void PlayAnimation()
+    {
+        Animator ani = tip.GetComponent<Animator>();
+        ani.SetTrigger("repulse");
     }
 }

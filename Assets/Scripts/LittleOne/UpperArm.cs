@@ -98,7 +98,7 @@ public class UpperArm : MonoBehaviour
         //print((foreArm.transform.rotation.z/1) * 90);
 
         TurnArm();
-        TuneUpperArm1();
+        
     }
 
     void UpdateMotorSpeed()
@@ -135,9 +135,9 @@ public class UpperArm : MonoBehaviour
 
     void TuneUpperArm2()
     {
-        foreTarget = -hingeJointUpper.jointAngle;
-        //float error = hingeJointFore.jointAngle - foreTarget;
-        //motorFore.motorSpeed = -15 * error;
+        Vector2 armDirection = foreArm.transform.up;
+        float angle = Vector2.SignedAngle(armDirection, Vector2.down);
+        motorFore.motorSpeed = -maxRotateSpeed * angle / 120;
         hingeJointFore.motor = motorFore;
     }
 
@@ -166,7 +166,22 @@ public class UpperArm : MonoBehaviour
 
         rotateSpeed = -maxRotateSpeed * deltaAngle / 120;
 
-        UpdateMotorSpeed();
+       
+        if (expectedDirection.x > -0.4 && expectedDirection.x < 0.4 && expectedDirection.y < 0)
+        {
+            //UpdateMotorSpeed();
+            //TuneUpperArm2();
+            StopMotors();
+        }
+        else
+        {
+            UpdateMotorSpeed();
+            TuneUpperArm1();
+        }
+
+        
+
+        
         /*
         float currentAngle = Quaternion.Angle(foreArm.transform.rotation, Quaternion.identity);
         float expectedAngle = Vector2.SignedAngle(Vector2.up, mousePos - forearmScreenPos);

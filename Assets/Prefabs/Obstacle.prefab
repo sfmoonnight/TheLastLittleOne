@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1810164674982693442}
   - component: {fileID: 1810164674982693445}
   - component: {fileID: 1810164674982693444}
+  - component: {fileID: 715786173}
   m_Layer: 10
   m_Name: Obstacle
   m_TagString: Obstacle
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 10.7, y: 3.48}
+  m_Size: {x: 44.13191, y: 54.279972}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -99,7 +100,7 @@ BoxCollider2D:
     border: {x: 0.56, y: 0.56, z: 0.61, w: 0.63}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 10.7, y: 3.48}
-    newSize: {x: 10.7, y: 3.48}
+    newSize: {x: 44.13191, y: 54.279972}
     adaptiveTilingThreshold: 0.5
     drawMode: 1
     adaptiveTiling: 0
@@ -107,3 +108,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10.7, y: 3.48}
   m_EdgeRadius: 0
+--- !u!50 &715786173
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810164674982693447}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 6200000, guid: a528659a98e254f96b5c597d9596005a, type: 2}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
