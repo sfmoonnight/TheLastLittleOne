@@ -1203,7 +1203,7 @@ MonoBehaviour:
   energyBarMaxDistance: 3.62
   activated: 0
   bullet: {fileID: 8231167661598322573, guid: e013d21ed4e934cb09cb7a3e692f1432, type: 3}
-  instantiatePoint: {fileID: 0}
+  instantiatePoint: {fileID: 792044901}
 --- !u!114 &1590554237
 MonoBehaviour:
   m_ObjectHideFlags: 0
