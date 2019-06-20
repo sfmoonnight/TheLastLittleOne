@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public List<Part> parts;
-    public Part currentPart;
-    public int currentPartIndex;
+    public static List<Part> parts = new List<Part>();
+    public static Part currentPart;
+    public static int currentPartIndex;
     GameObject forearm;
 
     public float armEnergyMax;
     public float armEnergy;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,11 +19,13 @@ public class GameManager : MonoBehaviour
         foreach(Part part in forearm.GetComponents<Part>())
         {
             parts.Add(part);
+            print(part.enabled);
         }
-        currentPartIndex = 0;
 
         print(parts.Count);
-        SwitchPart();
+        DeactiveAllParts();
+        currentPartIndex = 0;
+        ActivatePart();
     }
 
     // Update is called once per frame
@@ -40,7 +43,7 @@ public class GameManager : MonoBehaviour
                 currentPartIndex -= 1;
             }
 
-            SwitchPart();
+            SwitchWeapon();
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -54,23 +57,51 @@ public class GameManager : MonoBehaviour
                 currentPartIndex += 1;
             }
 
-            SwitchPart();
+            SwitchWeapon();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            currentPartIndex = 2;
+            SwitchWeapon();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            currentPartIndex = 0;
+            SwitchWeapon();
+            ActuatePart();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            currentPartIndex = 1;
+            SwitchWeapon();
+            ActuatePart();
         }
 
     }
 
-    void SwitchPart()
+    public static void ActivatePart()
+    {
+        currentPart = parts[currentPartIndex];
+        //print(currentPart.partName);
+        currentPart.enabled = true;
+        currentPart.ActivatePart();
+    }
+
+    void ActuatePart()
+    {
+        currentPart.Actuate();
+    }
+
+    void SwitchWeapon()
     {
         print("Switch");
 
-        foreach(Part part in parts)
-        {
-            part.enabled = false;
-        }
+        DeactiveAllParts();
 
-        currentPart = parts[currentPartIndex];
-
-        currentPart.enabled = true;
+        ActivatePart();
 
         GameObject tip = GameObject.Find("Tip");
         tip.GetComponent<SpriteRenderer>().color = currentPart.tipColor;
@@ -78,5 +109,16 @@ public class GameManager : MonoBehaviour
         //var type = currentPart.GetType();
 
         //forearm.AddComponent(type);
+    }
+
+    public static void DeactiveAllParts()
+    {
+        foreach(Part part in parts)
+        {
+            part.enabled = false;
+            part.DeactivatePart();
+        }
+
+        currentPart = null;
     }
 }

@@ -10,19 +10,17 @@ public class LaserGun : Part
     // Start is called before the first frame update
     void Start()
     {
+        partName = "lasergun";
         tipColor = Color.white;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Shoot();
-        }
+        
     }
 
-    void Shoot()
+    public override void Actuate()
     {
         Instantiate(bullet, instantiatePoint.transform.position, instantiatePoint.transform.rotation);
     }

@@ -13,6 +13,7 @@ public class Repulser : Part
     void Start()
     {
         //forearm = GameObject.Find("forearm");
+        partName = "repulser";
         tipColor = Color.yellow;
         body = GameObject.Find("body").GetComponent<Rigidbody2D>();
 
@@ -23,23 +24,25 @@ public class Repulser : Part
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Repulse();
-        }
+        
     }
 
-    void Repulse()
+    public override void Actuate()
     {
-        if(armEnergy >= energyCost)
+        if (activated)
         {
-            body.AddForce(-transform.up * force, ForceMode2D.Impulse);
-            armEnergy -= energyCost;
-            PlayAnimation();
+            GameManager.DeactiveAllParts();
+            if (armEnergy >= energyCost)
+            {
+                body.AddForce(-transform.up * force, ForceMode2D.Impulse);
+                armEnergy -= energyCost;
+                PlayAnimation();
+            }
+            GameManager.ActivatePart();
         }
     }
 
-    void PlayAnimation()
+    public override void PlayAnimation()
     {
         Animator ani = tip.GetComponent<Animator>();
         ani.SetTrigger("repulse");

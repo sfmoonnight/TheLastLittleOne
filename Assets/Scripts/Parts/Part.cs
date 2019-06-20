@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Part : MonoBehaviour
 {
-    public string name;
+    public string partName;
     public Color tipColor;
 
     public float armEnergyMax;
     public float armEnergy;
+
     public float energyCost;
 
     public float energyRecovery;
@@ -16,6 +17,8 @@ public class Part : MonoBehaviour
     public GameObject energyBar;
     public Vector3 energyBarInitScale;
     public float energyBarMaxDistance;
+
+    public bool activated;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +31,7 @@ public class Part : MonoBehaviour
 
     }
 
-    void EnergyRecovery()
+    public void EnergyRecovery()
     {
         if(armEnergy < armEnergyMax)
         {
@@ -38,5 +41,31 @@ public class Part : MonoBehaviour
 
         //energyBar.transform.localScale = energyBarInitScale * (armEnergy / armEnergyMax);
         energyBarMask.transform.localPosition = new Vector3(((armEnergyMax - armEnergy) / armEnergyMax) * energyBarMaxDistance, 0, 0);
+    }
+
+    public virtual void ActivatePart()
+    {
+        if (!activated)
+        {
+            activated = true;
+        }
+    }
+
+    public virtual void DeactivatePart()
+    {
+        if (activated)
+        {         
+            activated = false;
+        }
+    }
+
+    public virtual void Actuate()
+    {
+
+    }
+
+    public virtual void PlayAnimation()
+    {
+
     }
 }
