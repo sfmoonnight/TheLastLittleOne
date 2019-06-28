@@ -21,7 +21,9 @@ public class DeadZone : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            GameObject checkPoint = GameObject.Find("checkpoint");
+            collision.transform.root.position = checkPoint.transform.position;
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
         }
     }
 }

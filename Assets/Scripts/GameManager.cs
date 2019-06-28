@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
         foreach(Part part in parts)
         {
             part.enabled = false;
-            part.DeactivatePart();
+            part.DeactivatePart();           
         }
 
         currentPart = null;
