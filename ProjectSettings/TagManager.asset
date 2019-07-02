@@ -9,6 +9,8 @@ TagManager:
   - GoLeft
   - GoRight
   - MovingObstacle
+  - Enemy
+  - Shield
   layers:
   - Default
   - TransparentFX
@@ -21,8 +23,8 @@ TagManager:
   - Player
   - MovingObstacle
   - Obstacle
-  - 
-  - 
+  - Enemy
+  - EnemyDetection
   - 
   - 
   - 
