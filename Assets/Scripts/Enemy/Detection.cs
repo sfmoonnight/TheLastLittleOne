@@ -21,7 +21,9 @@ public class Detection : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            enemy.GetComponent<Rigidbody2D>().WakeUp();
+            if(enemy.GetComponent<Enemy>().exist)
+            //enemy.GetComponent<Rigidbody2D>().simulated = true;
+            enemy.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         }
     }
 }

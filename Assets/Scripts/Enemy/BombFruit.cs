@@ -4,40 +4,100 @@ using UnityEngine;
 
 public class BombFruit : Enemy
 {
-    Rigidbody2D self;
+    
     Animator anim;
+   
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        health = 0;
+        base.Start();      
         
-        self = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        self.Sleep();
+        
+        //self.Sleep();
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
-        
+        base.Update();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public override void OnTriggerEnter2D(Collider2D collision)
     {
+        base.OnTriggerEnter2D(collision);
         //print("detectplayer");
         if (collision.CompareTag("Player"))
         {
-            Explode();
+            StartCoroutine(Action());
         }
 
         //DestroyEnemy(1.5f);
     }
 
-    void Explode()
+
+    //-------Functions
+    public override void DealDamage()
     {
         
-        anim.SetTrigger("explode");
+    }
+
+    public void AnimExplode()
+    {
+        //print("death triggered on fruit");
+       /* try
+        {
+            // https://answers.unity.com/questions/1403162/how-to-check-if-animator-is-playing.html
+            // string name = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+            AnimatorClipInfo aci = anim.GetCurrentAnimatorClipInfo(0)[0];
+        }
+        catch (System.IndexOutOfRangeException e)
+        {
+            anim.SetTrigger("explode");
+            self.bodyType = RigidbodyType2D.Static;
+        }*/
+
+        if (anim.GetCurrentAnimatorClipInfoCount(0) == 0)
+        {
+            anim.SetTrigger("explode");
+            self.bodyType = RigidbodyType2D.Static;
+        }
+        
+        //self.simulated = false;
+    }
+
+    public override void PlayDeathAnimation()
+    {
+        AnimExplode();
+    }
+
+    //-------Coroutines
+
+    public IEnumerator WaitAndPrint(float waitTime)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(waitTime);
+            print("WaitAndPrint " + Time.time);
+        }
+    }
+
+    public override void Reload()
+    {
+        base.Reload();
         self.bodyType = RigidbodyType2D.Static;
-        DestroyEnemy(0.5f);
+        // custom stuffz
+        //print("Event triggered on fruit");
+    }
+
+    IEnumerator Action()
+    {
+        AnimExplode();
+        DestroyEnemy(animTime);
+        //print("Going to wait for " + animTime);
+        yield return new WaitForSeconds(animTime); 
+        //print("I'm here");
+        GameManager.RestartFromLastCheckPoint();
+        yield return null;
     }
 }

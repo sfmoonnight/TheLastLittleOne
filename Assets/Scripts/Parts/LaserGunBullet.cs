@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserGunBullet : MonoBehaviour
+public class LaserGunBullet : Weapon
 {
     // Start is called before the first frame update
     void Start()
@@ -19,6 +19,11 @@ public class LaserGunBullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Obstacle"))
+        {
+            Destroy(gameObject);
+        }
+
+        if (collision.CompareTag("Enemy"))
         {
             Destroy(gameObject);
         }

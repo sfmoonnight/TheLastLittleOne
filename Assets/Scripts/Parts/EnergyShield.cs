@@ -30,7 +30,7 @@ public class EnergyShield : Part
 
     public override void DeactivatePart()
     {
-        print("deshield");
+        //print("deshield");
         shieldSprite.SetActive(false);
         activated = false;
     }

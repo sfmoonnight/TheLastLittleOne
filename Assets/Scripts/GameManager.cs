@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameObject littleOne;
+
     public static List<Part> parts = new List<Part>();
     public static Part currentPart;
     public static int currentPartIndex;
@@ -16,13 +18,14 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         forearm = GameObject.Find("forearm");
+        littleOne = gameObject;
         foreach(Part part in forearm.GetComponents<Part>())
         {
             parts.Add(part);
-            print(part.enabled);
+            //print(part.enabled);
         }
 
-        print(parts.Count);
+        //print(parts.Count);
         DeactiveAllParts();
         currentPartIndex = 0;
         ActivatePart();
@@ -97,7 +100,7 @@ public class GameManager : MonoBehaviour
 
     void SwitchWeapon()
     {
-        print("Switch");
+        //print("Switch");
 
         DeactiveAllParts();
 
@@ -120,5 +123,13 @@ public class GameManager : MonoBehaviour
         }
 
         currentPart = null;
+    }
+
+    public static void RestartFromLastCheckPoint()
+    {
+        //print("restart");
+        GameObject checkPoint = GameObject.Find("checkpoint");
+        littleOne.transform.position = checkPoint.transform.position;
+        EventManager.TriggerReload();
     }
 }

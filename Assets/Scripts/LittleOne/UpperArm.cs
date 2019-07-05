@@ -160,7 +160,7 @@ public class UpperArm : MonoBehaviour
         //Vector2 expectedDirection =  (mousePos - forearmScreenPos);
         //Vector2 currentDirection = camera.WorldToScreenPoint(foreArmTip.transform.position - foreArmPivot.transform.position);
         Vector2 currentDirection = foreArm.transform.up;
-        print(currentDirection + "  " + expectedDirection);
+        //print(currentDirection + "  " + expectedDirection);
 
         float deltaAngle = Vector2.SignedAngle(currentDirection, expectedDirection);
 

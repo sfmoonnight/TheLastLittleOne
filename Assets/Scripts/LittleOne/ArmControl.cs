@@ -100,7 +100,7 @@ public class ArmControl : MonoBehaviour
         
         if(pointerAngle > 120 || pointerAngle < -120)
         {
-            print("Im Lower part");
+            //print("Im Lower part");
             float expectedAngle = (Mathf.Abs(pointerAngle)/180) * pointerAngle;
             //print(expectedAngle);
             expectedDirection = RotateVector2ByAngle(Vector2.up, expectedAngle);

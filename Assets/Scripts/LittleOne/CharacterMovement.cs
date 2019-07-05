@@ -29,7 +29,7 @@ public class CharacterMovement : MonoBehaviour
 
     void Move(float force)
     {
-        print("IN");
+        //print("IN");
         if (onGround)
         {
             character.AddForce(Vector2.right * force);

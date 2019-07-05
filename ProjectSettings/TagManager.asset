@@ -11,6 +11,7 @@ TagManager:
   - MovingObstacle
   - Enemy
   - Shield
+  - Weapon
   layers:
   - Default
   - TransparentFX

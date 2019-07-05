@@ -1,17 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Repulser : Part
 {
     public float force;
     public GameObject tip;
 
+    GameObject energyBarUI;
+
     //GameObject forearm;
     Rigidbody2D body;
     // Start is called before the first frame update
     void Start()
     {
+        energyBarUI = GameObject.Find("EnergyBarUI");
         //forearm = GameObject.Find("forearm");
         partName = "repulser";
         tipColor = Color.yellow;
@@ -24,7 +28,7 @@ public class Repulser : Part
     // Update is called once per frame
     void Update()
     {
-        
+        energyBarUI.GetComponent<Image>().fillAmount = armEnergy/armEnergyMax;
     }
 
     public override void Actuate()
