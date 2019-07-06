@@ -16,7 +16,11 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        self = GetComponent<Rigidbody2D>();
+        if (GetComponent<Rigidbody2D>())
+        {
+            self = GetComponent<Rigidbody2D>();
+        }
+        
 
         //print("Subscribint");
         EventManager.OnReload += Reload;
