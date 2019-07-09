@@ -45,6 +45,7 @@ public class Part : MonoBehaviour
 
     public virtual void ActivatePart()
     {
+        enabled = true;
         if (!activated)
         {
             activated = true;
@@ -53,6 +54,7 @@ public class Part : MonoBehaviour
 
     public virtual void DeactivatePart()
     {
+        enabled = false;
         if (activated)
         {         
             activated = false;

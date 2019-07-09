@@ -22,6 +22,9 @@ public class LaserGun : Part
 
     public override void Actuate()
     {
-        Instantiate(bullet, instantiatePoint.transform.position, instantiatePoint.transform.rotation);
+        if (activated)
+        {
+            Instantiate(bullet, instantiatePoint.transform.position, instantiatePoint.transform.rotation);
+        }
     }
 }

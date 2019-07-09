@@ -35,14 +35,14 @@ public class Repulser : Part
     {
         if (activated)
         {
-            GameManager.DeactiveAllParts();
+            //GameManager.DeactiveAllParts();
             if (armEnergy >= energyCost)
             {
                 body.AddForce(-transform.up * force, ForceMode2D.Impulse);
                 armEnergy -= energyCost;
                 PlayAnimation();
             }
-            GameManager.ActivatePart();
+            //GameManager.ActivatePart();
         }
     }
 

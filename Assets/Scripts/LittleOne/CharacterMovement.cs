@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterMovement : MonoBehaviour
 {
     Rigidbody2D character;
     public float speed;
     public bool onGround;
+    public Toggle enableAD;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,15 +18,17 @@ public class CharacterMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.A))
+        if (enableAD.isOn)
         {
-            Move(-speed);
+            if (Input.GetKey(KeyCode.A))
+            {
+                Move(-speed);
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                Move(speed);
+            }
         }
-        if (Input.GetKey(KeyCode.D))
-        {
-            Move(speed);
-        }
-
     }
 
     void Move(float force)

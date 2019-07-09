@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,16 +20,22 @@ public class GameManager : MonoBehaviour
     {
         forearm = GameObject.Find("forearm");
         littleOne = gameObject;
+        /*
         foreach(Part part in forearm.GetComponents<Part>())
         {
             parts.Add(part);
             //print(part.enabled);
         }
 
+        //Repulser rp = forearm.GetComponent<Repulser>();
+        */
+
         //print(parts.Count);
         DeactiveAllParts();
-        currentPartIndex = 0;
-        ActivatePart();
+        /*currentPartIndex = 0;
+        ActivatePart();*/
+        ActivatePart<Repulser>();
+        ActivatePart<LaserGun>();
     }
 
     // Update is called once per frame
@@ -37,7 +44,7 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            if(currentPartIndex == 0)
+            /*if(currentPartIndex == 0)
             {
                 currentPartIndex = parts.Count - 1;
             }
@@ -46,12 +53,12 @@ public class GameManager : MonoBehaviour
                 currentPartIndex -= 1;
             }
 
-            SwitchWeapon();
+            SwitchWeapon();*/
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            if (currentPartIndex == parts.Count - 1)
+            /*if (currentPartIndex == parts.Count - 1)
             {
                 currentPartIndex = 0;
             }
@@ -60,45 +67,93 @@ public class GameManager : MonoBehaviour
                 currentPartIndex += 1;
             }
 
-            SwitchWeapon();
+            SwitchWeapon();*/
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            currentPartIndex = 2;
-            SwitchWeapon();
+            DeactivatePart<LaserGun>();
+            DeactivatePart<Repulser>();
+            ActivatePart<EnergyShield>();
+
+            /*currentPartIndex = 2;
+            SwitchWeapon();*/
+        }
+
+        if (Input.GetKeyUp(KeyCode.Mouse1))
+        {
+            ActivatePart<LaserGun>();
+            ActivatePart<Repulser>();
+            DeactivatePart<EnergyShield>();
+
+            /*currentPartIndex = 2;
+            SwitchWeapon();*/
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            currentPartIndex = 0;
+            ActuatePart<Repulser>();
+            /*currentPartIndex = 0;
             SwitchWeapon();
-            ActuatePart();
+            ActuatePart();*/
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            currentPartIndex = 1;
+            ActuatePart<LaserGun>();
+            /*currentPartIndex = 1;
             SwitchWeapon();
-            ActuatePart();
+            ActuatePart();*/
         }
 
     }
 
-    public static void ActivatePart()
+    /*public static void ActivatePart()
     {
         currentPart = parts[currentPartIndex];
         //print(currentPart.partName);
         currentPart.enabled = true;
         currentPart.ActivatePart();
+    }*/
+
+    public void UpdateTipColor(Part part)
+    {
+        GameObject tip = GameObject.Find("Tip");
+        tip.GetComponent<SpriteRenderer>().color = part.tipColor;
     }
 
-    void ActuatePart()
+    public void ActivatePart<T>()
+    {
+        T inst = forearm.GetComponent<T>();
+        Part part = (Part)Convert.ChangeType(inst, typeof(T));
+        //part.enabled = true;
+        part.ActivatePart();
+        UpdateTipColor(part);
+    }
+
+    public void DeactivatePart<T>()
+    {
+        T inst = forearm.GetComponent<T>();
+        Part part = (Part)Convert.ChangeType(inst, typeof(T));
+        //part.enabled = false;
+        part.DeactivatePart();
+
+    }
+
+    /*void ActuatePart()
     {
         currentPart.Actuate();
+    }*/
+
+    public void ActuatePart<T>()
+    {
+        T inst = forearm.GetComponent<T>();
+        Part part = (Part)Convert.ChangeType(inst, typeof(T));
+        part.Actuate();
+        UpdateTipColor(part);
     }
 
-    void SwitchWeapon()
+    /*void SwitchWeapon()
     {
         //print("Switch");
 
@@ -112,9 +167,9 @@ public class GameManager : MonoBehaviour
         //var type = currentPart.GetType();
 
         //forearm.AddComponent(type);
-    }
+    }*/
 
-    public static void DeactiveAllParts()
+    /*public static void DeactiveAllParts()
     {
         foreach(Part part in parts)
         {
@@ -123,6 +178,14 @@ public class GameManager : MonoBehaviour
         }
 
         currentPart = null;
+    }*/
+
+    public void DeactiveAllParts()
+    {
+        foreach (Part part in forearm.GetComponents<Part>())
+        {
+            part.DeactivatePart();
+        }
     }
 
     public static void RestartFromLastCheckPoint()
