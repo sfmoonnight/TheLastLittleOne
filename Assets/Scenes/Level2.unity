@@ -2418,7 +2418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -2791,6 +2791,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SortingLayer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4285259423365879023, guid: a307ddb4b681d8f40a10fead937bd17a,
+        type: 3}
+      propertyPath: m_BodyType
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a307ddb4b681d8f40a10fead937bd17a, type: 3}
@@ -4647,6 +4652,7 @@ GameObject:
   - component: {fileID: 1491808119}
   - component: {fileID: 1491808118}
   - component: {fileID: 1491808117}
+  - component: {fileID: 1491808120}
   m_Layer: 10
   m_Name: Rock_C
   m_TagString: Obstacle
@@ -4798,6 +4804,87 @@ PolygonCollider2D:
       - {x: 1.9549999, y: -2.05}
       - {x: 2.105, y: -2.02}
       - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
+      - {x: 2.365, y: -1.9399999}
 --- !u!212 &1491808118
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4862,6 +4949,27 @@ Transform:
   m_Father: {fileID: 834537213}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &1491808120
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491808116}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
 --- !u!1 &1494677580 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4285259423365879020, guid: a307ddb4b681d8f40a10fead937bd17a,
@@ -5970,7 +6078,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enable A/D
+  m_Text: Enable A/D move
 --- !u!222 &1838119666
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7467,16 +7575,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4285259423365879016, guid: a307ddb4b681d8f40a10fead937bd17a,
-        type: 3}
-      propertyPath: m_SortingLayerID
-      value: 1790245557
-      objectReference: {fileID: 0}
-    - target: {fileID: 4285259423365879016, guid: a307ddb4b681d8f40a10fead937bd17a,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a307ddb4b681d8f40a10fead937bd17a, type: 3}
