@@ -10,12 +10,13 @@ public class BoidManager : MonoBehaviour
     public GameObject target;
     public List<GameObject> avoids;
 
-    float globalScale = .91f;
+    //public float globalScale = .91f;
     float eraseRadius = 20;
     string tool = "boids";
 
     // boid control
     public float maxSpeed;
+    public float roationSpeed;
     public float friendRadius;
     public float crowdRadius;
     public float avoidRadius;
@@ -34,7 +35,7 @@ public class BoidManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //recalculateConstants();
+        recalculateConstants();
         boids = new List<Boid>();
 
         int count = 0;
@@ -81,10 +82,10 @@ public class BoidManager : MonoBehaviour
     // haha
     void recalculateConstants()
     {
-        maxSpeed = 2.1f * globalScale;
-        friendRadius = 60 * globalScale;
+        //maxSpeed = 20.1f * globalScale;
+        //friendRadius = 60 * globalScale;
         crowdRadius = (friendRadius / 1.3f);
-        avoidRadius = 90 * globalScale;
+        //avoidRadius = 90 * globalScale;
         coheseRadius = friendRadius;
     }
 

@@ -18,7 +18,7 @@ public class Boid : MonoBehaviour
     Vector2 avoidObjects;
 
     // timers
-    public int thinkTimer = 0;
+    public int thinkTimer = 5;
 
     // Start is called before the first frame update
     void Start()
@@ -34,20 +34,21 @@ public class Boid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        increment();
+        //increment();
         //wrap();
 
-        if (thinkTimer == 0)
+        if (Random.Range(0,thinkTimer) < 1)
         {
             // update our friend array (lots of square roots)
             getFriends();
+            
         }
         flock();
         //pos += move;
-        move.Normalize();
+        
         //pos.Normalize();
         //Vector2.ClampMagnitude(pos, BoidManager.maxSpeed);
-        transform.Translate(move * moveSpeed * Time.deltaTime);
+        
     }
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -147,10 +148,37 @@ public class Boid : MonoBehaviour
         Vector2 directrion = target.transform.position - transform.position;
         directrion.Normalize();
 
-        move += directrion/10;
+        move.Normalize();
+        transform.Translate(move * moveSpeed * Time.deltaTime, Space.World);
+
+        if (move != Vector2.zero)
+        {
+            //Vector2 moveDirection = gameObject.GetComponent<Rigidbody2D>().velocity;
+            //Vector2 moveDirection = move - (Vector2)transform.up;
+            //float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
+            //transform.rotation = Quaternion.AngleAxis(angle * boidManager.roationSpeed * Time.deltaTime, Vector3.forward);
+            //float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
+            //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(move, Vector3.up), boidManager.roationSpeed * Time.deltaTime);
+            /*
+            if(Vector2.SignedAngle(transform.up, move) > 10)
+            {
+                transform.Rotate(Vector3.forward * boidManager.roationSpeed * Time.deltaTime);
+            }
+            else if (Vector2.SignedAngle(transform.up, move) > -10)
+            {
+                transform.Rotate(Vector3.back * boidManager.roationSpeed * Time.deltaTime);
+            }*/
+
+        }
+        //move += directrion/10;
         //shade += getAverageColor() * 0.03;
         //shade += (random(2) - 1);
         //shade = (shade + 255) % 255; //max(0, min(255, shade));
+    }
+
+    void RotateTowardsDirection()
+    {
+
     }
 
     void getFriends()
@@ -161,13 +189,12 @@ public class Boid : MonoBehaviour
         {
             if (boid != this)
             {
-                
-            }
-            if (Vector2.Distance(boid.transform.position, transform.position) < boidManager.friendRadius)
-            {
-                //print("Add new friend");
-                nearby.Add(boid);
-            }
+                if (Vector2.Distance(boid.transform.position, transform.position) < boidManager.friendRadius)
+                {
+                    //print("Add new friend");
+                    nearby.Add(boid);
+                }
+            }   
         }
         friends = nearby;
     }
