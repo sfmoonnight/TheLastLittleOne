@@ -148,17 +148,18 @@ public class Boid : MonoBehaviour
         Vector2 directrion = target.transform.position - transform.position;
         directrion.Normalize();
 
+        move += directrion / 10;
+
         move.Normalize();
         transform.Translate(move * moveSpeed * Time.deltaTime, Space.World);
 
         if (move != Vector2.zero)
         {
             //Vector2 moveDirection = gameObject.GetComponent<Rigidbody2D>().velocity;
-            //Vector2 moveDirection = move - (Vector2)transform.up;
+            //Vector2 moveDirection = move - (Vector2)transform.TransformDirection(transform.up);
+            float angle = Mathf.Atan2(move.y, move.x) * Mathf.Rad2Deg - 90;
             //float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
-            //transform.rotation = Quaternion.AngleAxis(angle * boidManager.roationSpeed * Time.deltaTime, Vector3.forward);
-            //float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
-            //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(move, Vector3.up), boidManager.roationSpeed * Time.deltaTime);
+            //transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.LookRotation(moveDirection, Vector3.up), boidManager.roationSpeed * Time.deltaTime) ;
             /*
             if(Vector2.SignedAngle(transform.up, move) > 10)
             {
@@ -168,9 +169,13 @@ public class Boid : MonoBehaviour
             {
                 transform.Rotate(Vector3.back * boidManager.roationSpeed * Time.deltaTime);
             }*/
-
+            //float angle = Vector2.SignedAngle((Vector2)transform.TransformDirection(transform.up), move);
+            //transform.Rotate(0, 0, angle * boidManager.roationSpeed * Time.deltaTime);
+            //print(angle * boidManager.roationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+            //transform.rotation = Quaternion.AngleAxis(-angle * boidManager.roationSpeed * Time.deltaTime, Vector3.forward);
         }
-        //move += directrion/10;
+        
         //shade += getAverageColor() * 0.03;
         //shade += (random(2) - 1);
         //shade = (shade + 255) % 255; //max(0, min(255, shade));
