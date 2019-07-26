@@ -18,6 +18,11 @@ public class CharacterMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (StateManager.getTmpState().preventGameInput)
+        {
+            return;
+        }
+
         if (enableAD.isOn)
         {
             if (Input.GetKey(KeyCode.A))

@@ -7,8 +7,19 @@ using System.Runtime.Serialization.Formatters.Binary;
 public static class StateManager
 {
     public static string savePath = Application.persistentDataPath;
-    public static GameState gameState;
+    static GameState gameState = new GameState();
+    static TmpState tmpState = new TmpState();
     public static int slot = 0;
+
+    public static TmpState getTmpState()
+    {
+        return tmpState;
+    }
+
+    public static GameState getGameState()
+    {
+        return gameState;
+    }
 
     public static void LoadState()
     {
