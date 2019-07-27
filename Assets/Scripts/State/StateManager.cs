@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine.SceneManagement;
 
 public static class StateManager
 {
@@ -10,15 +11,28 @@ public static class StateManager
     static GameState gameState = new GameState();
     static TmpState tmpState = new TmpState();
     public static int slot = 0;
+    static TeleportConfig teleportConfig = new TeleportConfig();
 
-    public static TmpState getTmpState()
+    public static TeleportConfig GetTelePortConfig()
+    {
+        return teleportConfig;
+    }
+
+    public static TmpState GetTmpState()
     {
         return tmpState;
     }
 
-    public static GameState getGameState()
+    public static GameState GetGameState()
     {
         return gameState;
+    }
+
+    public static void Teleport(string teleporterName)
+    {
+        string sceneName = GetTelePortConfig().mapping[teleporterName];
+        GetTmpState().loadSpot = teleporterName;
+        SceneManager.LoadScene(sceneName);
     }
 
     public static void LoadState()
@@ -26,7 +40,7 @@ public static class StateManager
         if (File.Exists(savePath))
         {
             BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(getSavePath(), FileMode.Open);
+            FileStream stream = new FileStream(GetSavePath(), FileMode.Open);
             gameState = formatter.Deserialize(stream) as GameState;
             stream.Close();
         }
@@ -41,12 +55,12 @@ public static class StateManager
     public static void SaveState()
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        FileStream stream = new FileStream(getSavePath(), FileMode.Create);
+        FileStream stream = new FileStream(GetSavePath(), FileMode.Create);
         formatter.Serialize(stream, gameState);
         stream.Close();
     }
 
-    public static string getSavePath()
+    public static string GetSavePath()
     {
         return savePath + "/save" + slot + ".tllo";
     }

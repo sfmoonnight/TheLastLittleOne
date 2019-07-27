@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Teleporter : MonoBehaviour
@@ -10,10 +11,18 @@ public class Teleporter : MonoBehaviour
     bool activated = false;
     string interactionColliderTag = "InteractionCollider";
 
+    public string identity;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        string startSpot = StateManager.GetTmpState().loadSpot;
+        if (startSpot.Length > 0)
+        {
+            GameObject pod = GameObject.Find(startSpot + "Pod");
+            Vector3 podPos = pod.transform.position;
+            GameObject.Find("body").transform.position = podPos;
+        }
     }
 
     // Update is called once per frame
@@ -40,29 +49,30 @@ public class Teleporter : MonoBehaviour
         }
     }
 
-    bool EnableButton(string goName)
-    {
-        Button btn = GameObject.Find(goName).GetComponent<Button>();
-        btn.interactable = true;
-        return btn.interactable;
-    }
-
-    bool DisableButton(string goName)
-    {
-        Button btn = GameObject.Find(goName).GetComponent<Button>();
-        btn.interactable = false;
-        return btn.interactable;
-    }
-
     void Refresh()
     {
-        GameState gs = StateManager.getGameState();
+        GameState gs = StateManager.GetGameState();
 
-        bool a;
-        a = gs.teleHub ? EnableButton("teleHub") : DisableButton("teleHub");
-        a = gs.tele1 ? EnableButton("tele1") : DisableButton("tele1");
-        a = gs.tele2 ? EnableButton("tele2") : DisableButton("tele2");
-        a = gs.tele3 ? EnableButton("tele3") : DisableButton("tele3");
+        Button[] buttons = gameObject.GetComponentsInChildren<Button>();
+        foreach (Button b in buttons)
+        {
+            bool enabled = (bool) gs.GetType().GetField(b.name).GetValue(gs);
+            if (enabled)
+            {
+                b.interactable = true;
+            }
+            else
+            {
+                b.interactable = false;
+            }
+
+            if (b.name == identity)
+            {
+                Color newColor = new Color(0.5137255f, 1f, 0.9058824f, 1f);
+
+                b.GetComponent<Image>().color = newColor;
+            }
+        }
     }
 
     void Activate()
@@ -73,7 +83,7 @@ public class Teleporter : MonoBehaviour
         cg.blocksRaycasts = true;
         cg.interactable = true;
         activated = true;
-        StateManager.getTmpState().preventGameInput = true;
+        StateManager.GetTmpState().preventGameInput = true;
     }
 
     void Deactivate()
@@ -83,7 +93,7 @@ public class Teleporter : MonoBehaviour
         cg.blocksRaycasts = false;
         cg.interactable = false;
         activated = false;
-        StateManager.getTmpState().preventGameInput = false;
+        StateManager.GetTmpState().preventGameInput = false;
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -101,6 +111,10 @@ public class Teleporter : MonoBehaviour
         }
     }
 
-
+    public void Teleport(string destination)
+    {
+        Deactivate();
+        StateManager.Teleport(destination);
+    }
 
 }

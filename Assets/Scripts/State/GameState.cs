@@ -10,6 +10,11 @@ public class GameState
 
     public bool teleHub = true;
     public bool tele1 = true;
-    public bool tele2 = false;
+    public bool tele2a = true;
+    public bool tele2b = true;
     public bool tele3 = false;
+
+    public string sceneName;
+    public int x;
+    public int y;
 }
