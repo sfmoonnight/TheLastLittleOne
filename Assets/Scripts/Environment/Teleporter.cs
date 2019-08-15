@@ -7,15 +7,22 @@ using UnityEngine.UI;
 public class Teleporter : MonoBehaviour
 {
     public GameObject worldMapCanvas;
-    bool near = false;
-    bool activated = false;
-    string interactionColliderTag = "InteractionCollider";
+    public GameObject instruction;
 
+    bool near = false;
+    public bool activated = false;
+    string interactionColliderTag = "InteractionCollider";
+    
     public string identity;
 
     // Start is called before the first frame update
     void Start()
     {
+        if (IsEnabled())
+        {
+            GetComponent<Animator>().SetTrigger("visited");
+        }
+
         string startSpot = StateManager.GetTmpState().loadSpot;
         if (startSpot.Length > 0)
         {
@@ -75,13 +82,29 @@ public class Teleporter : MonoBehaviour
         }
     }
 
+    void Enable()
+    {
+        gameObject.GetComponent<Animator>().SetTrigger("enable");
+        GameState gs = StateManager.GetGameState();
+        gs.GetType().GetField(identity).SetValue(gs, true);
+    }
+
+    bool IsEnabled()
+    {
+        GameState gs = StateManager.GetGameState();
+        bool enabled = (bool)gs.GetType().GetField(identity).GetValue(gs);
+        return enabled;
+    }
+
     void Activate()
     {
+        
+
         Refresh();
         CanvasGroup cg = worldMapCanvas.GetComponent<CanvasGroup>();
         cg.alpha = 1;
-        cg.blocksRaycasts = true;
         cg.interactable = true;
+        cg.blocksRaycasts = true;
         activated = true;
         StateManager.GetTmpState().preventGameInput = true;
     }
@@ -97,16 +120,24 @@ public class Teleporter : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag(interactionColliderTag)) {
+    {  
+        if (other.CompareTag(interactionColliderTag))
+        {
+            instruction.GetComponent<CanvasGroup>().alpha = 1;
             near = true;
+            if (!IsEnabled())
+            {
+                Enable();
+            }
         }
+        
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag(interactionColliderTag)) {
             near = false;
+            instruction.GetComponent<CanvasGroup>().alpha = 0;
             Deactivate();
         }
     }

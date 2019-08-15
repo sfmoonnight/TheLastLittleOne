@@ -79,8 +79,6 @@ public class GameManager : MonoBehaviour
             DeactivatePart<Repulser>();
             ActivatePart<EnergyShield>();
 
-            /*currentPartIndex = 2;
-            SwitchWeapon();*/
         }
 
         if (Input.GetKeyUp(KeyCode.Mouse1))
@@ -89,24 +87,18 @@ public class GameManager : MonoBehaviour
             ActivatePart<Repulser>();
             DeactivatePart<EnergyShield>();
 
-            /*currentPartIndex = 2;
-            SwitchWeapon();*/
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             ActuatePart<Repulser>();
-            /*currentPartIndex = 0;
-            SwitchWeapon();
-            ActuatePart();*/
+
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             ActuatePart<LaserGun>();
-            /*currentPartIndex = 1;
-            SwitchWeapon();
-            ActuatePart();*/
+ 
         }
 
     }

@@ -13,6 +13,6 @@ public class TeleportConfig
         mapping.Add("tele1", "Level1");
         mapping.Add("tele2a", "Level2");
         mapping.Add("tele2b", "Level2");
-        mapping.Add("tele3", "Level3");
+        mapping.Add("tele3", "TestScene");
     }
 }
