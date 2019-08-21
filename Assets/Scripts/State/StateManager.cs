@@ -35,6 +35,11 @@ public static class StateManager
         SceneManager.LoadScene(sceneName);
     }
 
+    public static void ChangeGearNumber(int gears)
+    {
+        GetGameState().gears += gears;
+    }
+
     public static void LoadState()
     {
         if (File.Exists(savePath))

@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     public float maxHealth;
     public float health;
     public float animTime;
+    public int gearDrop;
 
     public Rigidbody2D self;
     public bool exist;
@@ -20,8 +21,8 @@ public class Enemy : MonoBehaviour
         {
             self = GetComponent<Rigidbody2D>();
         }
-        
 
+        health = maxHealth;
         //print("Subscribint");
         EventManager.OnReload += Reload;
     }
@@ -61,12 +62,18 @@ public class Enemy : MonoBehaviour
         {
             PlayDeathAnimation();
             DestroyEnemy(animTime);
+            DropGears();
         }
     }
 
     public virtual void PlayDeathAnimation()
     {
 
+    }
+
+    public virtual void DropGears()
+    {
+        StateManager.ChangeGearNumber(gearDrop);
     }
 
     public void InactivateAllColliders()
@@ -108,6 +115,7 @@ public class Enemy : MonoBehaviour
     {
         // repositioning code
         Reposition();
+        health = maxHealth;
         EnableSpriteRenderer();
         EnableAllColliders();
         //ResetRigidbody();
