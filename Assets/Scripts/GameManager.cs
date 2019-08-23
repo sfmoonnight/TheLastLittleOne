@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
         healthBarUI.GetComponent<Image>().fillAmount = health / StateManager.GetGameState().maxHealth;
         if(health <= 0)
         {
-            RestartFromLastCheckPoint();
+            StartCoroutine(RestartFromLastCheckPoint(0.5f));
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -208,10 +208,11 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public static void RestartFromLastCheckPoint()
+    IEnumerator RestartFromLastCheckPoint(float time)
     {
         //print("restart");
         GameObject checkPoint = GameObject.Find("checkpoint");
+        yield return new WaitForSeconds(time);
         littleOne.transform.position = checkPoint.transform.position;
         health = StateManager.GetGameState().maxHealth;
         EventManager.TriggerReload();

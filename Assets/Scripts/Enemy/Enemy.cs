@@ -105,10 +105,10 @@ public class Enemy : MonoBehaviour
     public virtual void Reload()
     {
         // repositioning code
+        EnableSpriteRenderer();
         Reposition();
         health = maxHealth;
-        ResetRigidbody();
-        EnableSpriteRenderer();
+        ResetRigidbody();   
         EnableAllColliders();
         //ResetRigidbody();
         exist = true;

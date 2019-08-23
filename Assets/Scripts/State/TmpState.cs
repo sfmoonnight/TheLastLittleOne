@@ -7,4 +7,5 @@ public class TmpState
     public bool preventGameInput = false;
 
     public string loadSpot = "";
+
 }

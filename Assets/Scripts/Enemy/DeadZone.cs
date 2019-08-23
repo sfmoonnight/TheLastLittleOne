@@ -20,7 +20,7 @@ public class DeadZone : Enemy
     {
         if (collision.CompareTag("Player"))
         {
-            GameManager.RestartFromLastCheckPoint();
+            GameManager.health = -1;
         }
     }
 }
