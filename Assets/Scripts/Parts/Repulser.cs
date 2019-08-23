@@ -21,14 +21,14 @@ public class Repulser : Part
         tipColor = Color.yellow;
         body = GameObject.Find("body").GetComponent<Rigidbody2D>();
 
-        armEnergy = armEnergyMax;
+        armEnergy = StateManager.GetGameState().maxArmEnergy;
         InvokeRepeating("EnergyRecovery", 0, 0.1f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        energyBarUI.GetComponent<Image>().fillAmount = armEnergy/armEnergyMax;
+        energyBarUI.GetComponent<Image>().fillAmount = armEnergy/ StateManager.GetGameState().maxArmEnergy;
     }
 
     public override void Actuate()

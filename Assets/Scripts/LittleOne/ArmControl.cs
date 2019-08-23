@@ -8,8 +8,8 @@ public class ArmControl : MonoBehaviour
 
     public GameObject foreArm;
     public GameObject upperArm;
-    JointMotor2D motorUpper;
-    JointMotor2D motorFore;
+    public JointMotor2D motorUpper;
+    public JointMotor2D motorFore;
     public HingeJoint2D hingeJointUpper;
     public HingeJoint2D hingeJointFore;
     public float maxRotateSpeed;

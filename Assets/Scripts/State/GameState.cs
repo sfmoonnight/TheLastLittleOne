@@ -5,9 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class GameState
 {
-    public int level = 1;
+    //---Resource
     public int gears = 0;
 
+    //---Environment
     public bool teleHub = true;
     public bool tele1 = true;
     public bool tele2a = true;
@@ -17,4 +18,9 @@ public class GameState
     public string sceneName;
     public int x;
     public int y;
+
+    //---Upgrade
+    public float maxHealth = 100;
+    public int level = 1;
+    public float maxArmEnergy = 100;
 }

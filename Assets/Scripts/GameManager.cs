@@ -2,22 +2,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    GameObject healthBarUI;
+    GameObject forearm;
+
     public static GameObject littleOne;
 
     public static List<Part> parts = new List<Part>();
     public static Part currentPart;
     public static int currentPartIndex;
-    GameObject forearm;
+    
 
+    public float maxHealth;
+    public static float health;
     public float armEnergyMax;
     public float armEnergy;
 
     // Start is called before the first frame update
     void Start()
     {
+        health = StateManager.GetGameState().maxHealth;
+        healthBarUI = GameObject.Find("HealthBarUI");
         forearm = GameObject.Find("forearm");
         littleOne = gameObject;
         /*
@@ -41,8 +49,15 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (StateManager.GetTmpState().preventGameInput) {
             return;
+        }
+
+        healthBarUI.GetComponent<Image>().fillAmount = health / StateManager.GetGameState().maxHealth;
+        if(health <= 0)
+        {
+            RestartFromLastCheckPoint();
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -97,8 +112,17 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            ActuatePart<LaserGun>();
- 
+            //ActuatePart<LaserGun>();
+            DeactivatePart<Repulser>();
+            DeactivatePart<EnergyShield>();
+            ActivatePart<LightSaber>();
+
+        }
+
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            ActivatePart<Repulser>();
+            DeactivatePart<LightSaber>();
         }
 
     }
@@ -183,11 +207,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     public static void RestartFromLastCheckPoint()
     {
         //print("restart");
         GameObject checkPoint = GameObject.Find("checkpoint");
         littleOne.transform.position = checkPoint.transform.position;
+        health = StateManager.GetGameState().maxHealth;
         EventManager.TriggerReload();
     }
 }

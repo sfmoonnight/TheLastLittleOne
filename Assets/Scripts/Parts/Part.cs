@@ -7,7 +7,6 @@ public class Part : MonoBehaviour
     public string partName;
     public Color tipColor;
 
-    public float armEnergyMax;
     public float armEnergy;
 
     public float energyCost;
@@ -33,14 +32,14 @@ public class Part : MonoBehaviour
 
     public void EnergyRecovery()
     {
-        if(armEnergy < armEnergyMax)
+        if(armEnergy < StateManager.GetGameState().maxArmEnergy)
         {
             armEnergy += energyRecovery;
-            Mathf.Clamp(armEnergy, 0, armEnergyMax);
+            Mathf.Clamp(armEnergy, 0, StateManager.GetGameState().maxArmEnergy);
         }
 
         //energyBar.transform.localScale = energyBarInitScale * (armEnergy / armEnergyMax);
-        energyBarMask.transform.localPosition = new Vector3(((armEnergyMax - armEnergy) / armEnergyMax) * energyBarMaxDistance, 0, 0);
+        energyBarMask.transform.localPosition = new Vector3(((StateManager.GetGameState().maxArmEnergy - armEnergy) / StateManager.GetGameState().maxArmEnergy) * energyBarMaxDistance, 0, 0);
     }
 
     public virtual void ActivatePart()

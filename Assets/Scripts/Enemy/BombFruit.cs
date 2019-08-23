@@ -29,7 +29,7 @@ public class BombFruit : Enemy
         //print("detectplayer");
         if (collision.CompareTag("Player"))
         {
-            StartCoroutine(Action());
+            DestroyEnemy();
         }
 
         //DestroyEnemy(1.5f);
@@ -37,10 +37,6 @@ public class BombFruit : Enemy
 
 
     //-------Functions
-    public override void DealDamage()
-    {
-        
-    }
 
     public void AnimExplode()
     {
@@ -57,47 +53,53 @@ public class BombFruit : Enemy
             self.bodyType = RigidbodyType2D.Static;
         }*/
 
-        if (anim.GetCurrentAnimatorClipInfoCount(0) == 0)
-        {
-            anim.SetTrigger("explode");
-            self.bodyType = RigidbodyType2D.Static;
-        }
+       
         
         //self.simulated = false;
     }
 
+    public override void DestroyEnemy()
+    {
+        base.DestroyEnemy();
+        self.bodyType = RigidbodyType2D.Static;
+    }
+
     public override void PlayDeathAnimation()
     {
-        AnimExplode();
+        base.PlayDeathAnimation();
+        if (anim.GetCurrentAnimatorClipInfoCount(0) == 0)
+        {
+            anim.SetTrigger("explode");        
+        }
+        //AnimExplode();
     }
 
     //-------Coroutines
 
-    public IEnumerator WaitAndPrint(float waitTime)
+    /*public IEnumerator WaitAndPrint(float waitTime)
     {
         while (true)
         {
             yield return new WaitForSeconds(waitTime);
             print("WaitAndPrint " + Time.time);
         }
-    }
+    }*/
 
     public override void Reload()
     {
         base.Reload();
-        self.bodyType = RigidbodyType2D.Static;
         // custom stuffz
+        self.bodyType = RigidbodyType2D.Static;
         //print("Event triggered on fruit");
     }
 
-    IEnumerator Action()
+    /*IEnumerator Action()
     {
-        AnimExplode();
         DestroyEnemy(animTime);
         //print("Going to wait for " + animTime);
         yield return new WaitForSeconds(animTime); 
         //print("I'm here");
         GameManager.RestartFromLastCheckPoint();
         yield return null;
-    }
+    }*/
 }

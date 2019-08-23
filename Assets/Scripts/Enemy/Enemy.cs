@@ -4,26 +4,32 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float damage;
     public float maxHealth;
     public float health;
-    public float animTime;
+    public float deanthAnimTime;
     public int gearDrop;
+    public Vector2 spawningpoint;
 
     public Rigidbody2D self;
     public bool exist;
 
-
+    GameObject upperArm;
+    HingeJoint2D upperArmJoint;
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        health = maxHealth;
+        spawningpoint = transform.position;
+        upperArm = GameObject.Find("UpperArm");
+        upperArmJoint = upperArm.GetComponent<HingeJoint2D>();
+
         if (GetComponent<Rigidbody2D>())
         {
             self = GetComponent<Rigidbody2D>();
         }
 
-        health = maxHealth;
         //print("Subscribint");
+        //---Set up event
         EventManager.OnReload += Reload;
     }
 
@@ -38,21 +44,27 @@ public class Enemy : MonoBehaviour
         if (collision.CompareTag("Weapon"))
         {
             float dam = collision.GetComponent<Weapon>().damage;
+        }
+        if (collision.CompareTag("SpeedWeapon"))
+        {
+            print("inspeedweapon");
+            float speed = Mathf.Abs(upperArmJoint.motor.motorSpeed);
+            float dam = collision.GetComponent<Weapon>().damage * speed * 0.01f + collision.GetComponent<Weapon>().damage;
             TakeDamage(dam);
+            //print(speed);
+            //print(dam);
         }
     }
 
 
     //----------Functions
-    public virtual void DestroyEnemy(float time)
+    //---Death functions
+    public virtual void DestroyEnemy()
     {
-        StartCoroutine(HideEnemy(time));
+        InactivateAllColliders();
+        StartCoroutine(HideEnemy(deanthAnimTime));
+        self.bodyType = RigidbodyType2D.Static;
         exist = false;
-    }
-
-    public virtual void DealDamage()
-    {
-
     }
 
     public void TakeDamage(float damage)
@@ -60,9 +72,7 @@ public class Enemy : MonoBehaviour
         health -= damage;
         if (health <= 0)
         {
-            PlayDeathAnimation();
-            DestroyEnemy(animTime);
-            DropGears();
+            DestroyEnemy();
         }
     }
 
@@ -79,17 +89,35 @@ public class Enemy : MonoBehaviour
     public void InactivateAllColliders()
     {
         Collider2D[] colliders = gameObject.GetComponents<Collider2D>();
+        Collider2D[] childColliders = gameObject.GetComponentsInChildren<Collider2D>();
         foreach(Collider2D c in colliders)
+        {
+            c.enabled = false;
+        }
+
+        foreach (Collider2D c in childColliders)
         {
             c.enabled = false;
         }
     }
 
-    public void Reposition()
+    //---Reload functions
+    public virtual void Reload()
+    {
+        // repositioning code
+        Reposition();
+        health = maxHealth;
+        ResetRigidbody();
+        EnableSpriteRenderer();
+        EnableAllColliders();
+        //ResetRigidbody();
+        exist = true;
+    }
+
+    public virtual void Reposition()
     {
         //print("relocate");
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
+        transform.position = spawningpoint;
     }
 
     public void EnableSpriteRenderer()
@@ -100,7 +128,12 @@ public class Enemy : MonoBehaviour
     public void EnableAllColliders()
     {
         Collider2D[] colliders = gameObject.GetComponents<Collider2D>();
+        Collider2D[] childColliders = gameObject.GetComponentsInChildren<Collider2D>();
         foreach (Collider2D c in colliders)
+        {
+            c.enabled = true;
+        }
+        foreach (Collider2D c in childColliders)
         {
             c.enabled = true;
         }
@@ -111,23 +144,12 @@ public class Enemy : MonoBehaviour
         self.bodyType = RigidbodyType2D.Dynamic;
     }
 
-    public virtual void Reload()
-    {
-        // repositioning code
-        Reposition();
-        health = maxHealth;
-        EnableSpriteRenderer();
-        EnableAllColliders();
-        //ResetRigidbody();
-        exist = true;
-    }
-
-
     //----------Coroutines
     IEnumerator HideEnemy(float time)
     {
+        PlayDeathAnimation();
         yield return new WaitForSeconds(time);
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        InactivateAllColliders();
+        DropGears();
     }
 }

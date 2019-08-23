@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserGun : Part
+public class LaserGun : Weapon
 {
     public GameObject bullet;
     public GameObject instantiatePoint;

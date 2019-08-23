@@ -10,9 +10,10 @@ TagManager:
   - GoRight
   - MovingObstacle
   - Enemy
-  - Shield
   - Weapon
   - InteractionCollider
+  - SpeedWeapon
+  - Tip
   layers:
   - Default
   - TransparentFX
