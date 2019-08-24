@@ -58,9 +58,8 @@ public class BombFruit : Enemy
         //self.simulated = false;
     }
 
-    public override void DestroyEnemy()
+    public override void ResetRigidbody()
     {
-        base.DestroyEnemy();
         self.bodyType = RigidbodyType2D.Static;
     }
 

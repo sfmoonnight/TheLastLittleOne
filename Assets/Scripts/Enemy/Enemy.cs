@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
 
     GameObject upperArm;
     HingeJoint2D upperArmJoint;
+    Vector2 hitDirection = Vector2.zero;
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -43,16 +44,23 @@ public class Enemy : MonoBehaviour
     {
         if (collision.CompareTag("Weapon"))
         {
+            hitDirection = transform.position - upperArm.transform.position;
+            self.AddForce(hitDirection, ForceMode2D.Impulse);
             float dam = collision.GetComponent<Weapon>().damage;
         }
         if (collision.CompareTag("SpeedWeapon"))
         {
             print("inspeedweapon");
-            float speed = Mathf.Abs(upperArmJoint.motor.motorSpeed);
-            float dam = collision.GetComponent<Weapon>().damage * speed * 0.01f + collision.GetComponent<Weapon>().damage;
-            TakeDamage(dam);
-            //print(speed);
-            //print(dam);
+            if (health > 0)
+            {
+                hitDirection = transform.position - upperArm.transform.position;
+                self.AddForce(hitDirection, ForceMode2D.Impulse);
+                float speed = Mathf.Abs(upperArmJoint.motor.motorSpeed);
+                float dam = collision.GetComponent<Weapon>().damage * speed * 0.01f + collision.GetComponent<Weapon>().damage;
+                TakeDamage(dam);
+                //print(speed);
+                print(dam);
+            } 
         }
     }
 
@@ -61,9 +69,9 @@ public class Enemy : MonoBehaviour
     //---Death functions
     public virtual void DestroyEnemy()
     {
+        print("destroy");
         InactivateAllColliders();
         StartCoroutine(HideEnemy(deanthAnimTime));
-        self.bodyType = RigidbodyType2D.Static;
         exist = false;
     }
 
@@ -101,6 +109,15 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void HideSprite()
+    {
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        if (gameObject.GetComponent<SpriteMask>())
+        {
+            gameObject.GetComponent<SpriteMask>().enabled = false;
+        }
+    }
+
     //---Reload functions
     public virtual void Reload()
     {
@@ -118,6 +135,7 @@ public class Enemy : MonoBehaviour
     {
         //print("relocate");
         transform.position = spawningpoint;
+        transform.rotation = Quaternion.identity;
     }
 
     public void EnableSpriteRenderer()
@@ -139,7 +157,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void ResetRigidbody()
+    public virtual void ResetRigidbody()
     {
         self.bodyType = RigidbodyType2D.Dynamic;
     }
@@ -149,7 +167,8 @@ public class Enemy : MonoBehaviour
     {
         PlayDeathAnimation();
         yield return new WaitForSeconds(time);
-        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        HideSprite();
+        self.bodyType = RigidbodyType2D.Static;
         DropGears();
     }
 }

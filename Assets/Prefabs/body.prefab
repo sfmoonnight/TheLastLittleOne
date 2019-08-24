@@ -244,7 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14c966f7e4195430c84a95a4f52072ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 300
+  speed: 250
   onGround: 0
   enableAD: {fileID: 0}
 --- !u!60 &4864742077183700566
@@ -818,7 +818,7 @@ MonoBehaviour:
   upperArm: {fileID: 4864742077911940749}
   hingeJointUpper: {fileID: 4864742077911940736}
   hingeJointFore: {fileID: 4864742078057374119}
-  maxRotateSpeed: 5
+  maxRotateSpeed: 9
 --- !u!1 &4864742077915379933
 GameObject:
   m_ObjectHideFlags: 0
