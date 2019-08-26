@@ -3005,6 +3005,15 @@ PrefabInstance:
       propertyPath: enableAD
       value: 
       objectReference: {fileID: 1545448939}
+    - target: {fileID: 4864742078168619837, guid: e6e7f25251c42482da6fcd157594d214,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 76539808, guid: e6e7f25251c42482da6fcd157594d214, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4864742077911940736, guid: e6e7f25251c42482da6fcd157594d214,
         type: 3}
       propertyPath: m_ConnectedAnchor.y

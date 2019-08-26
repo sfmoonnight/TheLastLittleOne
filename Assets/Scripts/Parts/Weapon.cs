@@ -5,16 +5,15 @@ using UnityEngine;
 public class Weapon : Part
 {
     public float damage;
-
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
-        
+        base.Start();   
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
-        
+        base.Update();
     }
 }

@@ -8,27 +8,23 @@ public class Repulser : Part
     public float force;
     public GameObject tip;
 
-    GameObject energyBarUI;
 
     //GameObject forearm;
     Rigidbody2D body;
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
-        energyBarUI = GameObject.Find("EnergyBarUI");
+        base.Start();
         //forearm = GameObject.Find("forearm");
         partName = "repulser";
         tipColor = Color.yellow;
         body = GameObject.Find("body").GetComponent<Rigidbody2D>();
-
-        armEnergy = StateManager.GetGameState().maxArmEnergy;
-        InvokeRepeating("EnergyRecovery", 0, 0.1f);
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
-        energyBarUI.GetComponent<Image>().fillAmount = armEnergy/ StateManager.GetGameState().maxArmEnergy;
+        base.Update();
     }
 
     public override void Actuate()
@@ -36,10 +32,10 @@ public class Repulser : Part
         if (activated)
         {
             //GameManager.DeactiveAllParts();
-            if (armEnergy >= energyCost)
+            if (GameManager.armEnergy >= energyCost)
             {
                 body.AddForce(-transform.up * force, ForceMode2D.Impulse);
-                armEnergy -= energyCost;
+                ConsumeEnergy();
                 PlayAnimation();
             }
             //GameManager.ActivatePart();

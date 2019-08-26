@@ -23,41 +23,7 @@ public class BombFruit : Enemy
         base.Update();
     }
 
-    public override void OnTriggerEnter2D(Collider2D collision)
-    {
-        base.OnTriggerEnter2D(collision);
-        //print("detectplayer");
-        if (collision.CompareTag("Player"))
-        {
-            DestroyEnemy();
-        }
-
-        //DestroyEnemy(1.5f);
-    }
-
-
     //-------Functions
-
-    public void AnimExplode()
-    {
-        //print("death triggered on fruit");
-       /* try
-        {
-            // https://answers.unity.com/questions/1403162/how-to-check-if-animator-is-playing.html
-            // string name = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name;
-            AnimatorClipInfo aci = anim.GetCurrentAnimatorClipInfo(0)[0];
-        }
-        catch (System.IndexOutOfRangeException e)
-        {
-            anim.SetTrigger("explode");
-            self.bodyType = RigidbodyType2D.Static;
-        }*/
-
-       
-        
-        //self.simulated = false;
-    }
-
     public override void ResetRigidbody()
     {
         self.bodyType = RigidbodyType2D.Static;
@@ -71,6 +37,12 @@ public class BombFruit : Enemy
             anim.SetTrigger("explode");        
         }
         //AnimExplode();
+    }
+
+    public override void DestroyEnemy()
+    {
+        base.DestroyEnemy();
+        self.velocity = Vector2.zero;
     }
 
     //-------Coroutines

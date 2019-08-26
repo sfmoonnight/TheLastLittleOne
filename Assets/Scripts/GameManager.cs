@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     GameObject healthBarUI;
+    GameObject energyBarUI;
     GameObject forearm;
 
     public static GameObject littleOne;
@@ -18,14 +19,24 @@ public class GameManager : MonoBehaviour
 
     public float maxHealth;
     public static float health;
-    public float armEnergyMax;
-    public float armEnergy;
+    public float maxArmEnergy;
+    public static float armEnergy;
+
+    public GameObject energyBarMask;
+    public GameObject energyBar;
+
+    public float energyRecovery;
+    public float energyBarMaxDistance = 3.62f;
+
+    public static bool recoverEnergy;
 
     // Start is called before the first frame update
     void Start()
     {
         health = StateManager.GetGameState().maxHealth;
+        armEnergy = StateManager.GetGameState().maxArmEnergy;
         healthBarUI = GameObject.Find("HealthBarUI");
+        energyBarUI = GameObject.Find("EnergyBarUI");
         forearm = GameObject.Find("forearm");
         littleOne = gameObject;
         /*
@@ -44,15 +55,21 @@ public class GameManager : MonoBehaviour
         ActivatePart();*/
         ActivatePart<Repulser>();
         ActivatePart<LaserGun>();
+
+        recoverEnergy = true;
+        InvokeRepeating("EnergyRecovery", 0, 0.1f);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        //print(armEnergy);
         if (StateManager.GetTmpState().preventGameInput) {
             return;
         }
+
+        energyBarUI.GetComponent<Image>().fillAmount = armEnergy / StateManager.GetGameState().maxArmEnergy;
 
         healthBarUI.GetComponent<Image>().fillAmount = health / StateManager.GetGameState().maxHealth;
         if(health <= 0)
@@ -125,6 +142,21 @@ public class GameManager : MonoBehaviour
             DeactivatePart<LightSaber>();
         }
 
+    }
+
+    public void EnergyRecovery()
+    {
+        if (recoverEnergy)
+        {
+            if (armEnergy < StateManager.GetGameState().maxArmEnergy)
+            {
+                armEnergy += energyRecovery;
+                Mathf.Clamp(armEnergy, 0, StateManager.GetGameState().maxArmEnergy);
+            }
+
+            //energyBar.transform.localScale = energyBarInitScale * (armEnergy / armEnergyMax);
+            energyBarMask.transform.localPosition = new Vector3(((StateManager.GetGameState().maxArmEnergy - armEnergy) / StateManager.GetGameState().maxArmEnergy) * energyBarMaxDistance, 0, 0);
+        }    
     }
 
     /*public static void ActivatePart()
@@ -215,6 +247,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(time);
         littleOne.transform.position = checkPoint.transform.position;
         health = StateManager.GetGameState().maxHealth;
+        armEnergy = StateManager.GetGameState().maxArmEnergy;
         EventManager.TriggerReload();
     }
 }

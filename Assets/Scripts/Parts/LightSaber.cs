@@ -7,30 +7,39 @@ public class LightSaber : Weapon
     public GameObject lightSaberSprite;
 
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
+        base.Start();
         partName = "lightsaber";
         tipColor = Color.white;
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
-        
+        base.Update();
+        if(GameManager.armEnergy <= 0)
+        {
+            DeactivatePart();
+        }
     }
     public override void ActivatePart()
     {
-        if (!activated)
+        if(GameManager.armEnergy > 10)
         {
+            base.ActivatePart();
             lightSaberSprite.SetActive(true);
-            activated = true;
+            InvokeRepeating("ConsumeEnergy", 0, 0.1f);
+            GameManager.recoverEnergy = false;
         }
     }
 
     public override void DeactivatePart()
     {
+        base.DeactivatePart();
         lightSaberSprite.SetActive(false);
-        activated = false;
+        CancelInvoke("ConsumeEnergy");
+        GameManager.recoverEnergy = true;
     }
 
     void OnTriggerEnter2D(Collider2D other)

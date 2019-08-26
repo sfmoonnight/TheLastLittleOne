@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -13,16 +14,24 @@ public class Enemy : MonoBehaviour
     public Rigidbody2D self;
     public bool exist;
 
+    public GameObject healthBarImage;
+
     GameObject upperArm;
-    HingeJoint2D upperArmJoint;
-    Vector2 hitDirection = Vector2.zero;
+    Vector2 startingScale;
+    
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
         health = maxHealth;
         spawningpoint = transform.position;
+        startingScale = transform.localScale;
         upperArm = GameObject.Find("UpperArm");
-        upperArmJoint = upperArm.GetComponent<HingeJoint2D>();
+
+        if (healthBarImage)
+        {
+            healthBarImage.GetComponent<Image>().enabled = false;
+        }
 
         if (GetComponent<Rigidbody2D>())
         {
@@ -37,33 +46,19 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
-        
-    }
-
-    public virtual void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Weapon"))
+        if (healthBarImage)
         {
-            hitDirection = transform.position - upperArm.transform.position;
-            self.AddForce(hitDirection, ForceMode2D.Impulse);
-            float dam = collision.GetComponent<Weapon>().damage;
-        }
-        if (collision.CompareTag("SpeedWeapon"))
-        {
-            print("inspeedweapon");
-            if (health > 0)
+            healthBarImage.GetComponent<Image>().fillAmount = health / maxHealth;
+            if (health < maxHealth && health > 0)
             {
-                hitDirection = transform.position - upperArm.transform.position;
-                self.AddForce(hitDirection, ForceMode2D.Impulse);
-                float speed = Mathf.Abs(upperArmJoint.motor.motorSpeed);
-                float dam = collision.GetComponent<Weapon>().damage * speed * 0.01f + collision.GetComponent<Weapon>().damage;
-                TakeDamage(dam);
-                //print(speed);
-                print(dam);
-            } 
-        }
+                healthBarImage.GetComponent<Image>().enabled = true;
+            }
+            else
+            {
+                healthBarImage.GetComponent<Image>().enabled = false;
+            }
+        }  
     }
-
 
     //----------Functions
     //---Death functions
@@ -136,6 +131,7 @@ public class Enemy : MonoBehaviour
         //print("relocate");
         transform.position = spawningpoint;
         transform.rotation = Quaternion.identity;
+        transform.localScale = startingScale;
     }
 
     public void EnableSpriteRenderer()
