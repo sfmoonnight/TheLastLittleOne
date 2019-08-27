@@ -32,6 +32,8 @@ public static class StateManager
     {
         string sceneName = GetTelePortConfig().mapping[teleporterName];
         GetTmpState().loadSpot = teleporterName;
+
+        EventManager.TriggerRemove();
         SceneManager.LoadScene(sceneName);
     }
 

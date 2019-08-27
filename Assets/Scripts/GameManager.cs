@@ -107,7 +107,8 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            DeactivatePart<LaserGun>();
+            //DeactivatePart<LaserGun>();
+            DeactivatePart<LightSaber>();
             DeactivatePart<Repulser>();
             ActivatePart<EnergyShield>();
 

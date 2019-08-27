@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
     
 
     // Start is called before the first frame update
-    protected virtual void Start()
+    public virtual void Start()
     {
         health = maxHealth;
         spawningpoint = transform.position;
@@ -41,6 +41,7 @@ public class Enemy : MonoBehaviour
         //print("Subscribint");
         //---Set up event
         EventManager.OnReload += Reload;
+        EventManager.OnRemove += RemoveListeners;
     }
 
     // Update is called once per frame
@@ -122,8 +123,14 @@ public class Enemy : MonoBehaviour
         health = maxHealth;
         ResetRigidbody();   
         EnableAllColliders();
-        //ResetRigidbody();
         exist = true;
+    }
+
+    public virtual void RemoveListeners()
+    {
+        print("removelisteners");
+        EventManager.OnReload -= Reload;
+        EventManager.OnRemove -= RemoveListeners;
     }
 
     public virtual void Reposition()
@@ -157,6 +164,7 @@ public class Enemy : MonoBehaviour
     {
         self.bodyType = RigidbodyType2D.Dynamic;
     }
+
 
     //----------Coroutines
     IEnumerator HideEnemy(float time)

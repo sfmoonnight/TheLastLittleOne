@@ -3575,6 +3575,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CyberMice
       objectReference: {fileID: 0}
+    - target: {fileID: 7557084657224797154, guid: 1d9d111a179ca854fbae9202c0d338ed,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d9d111a179ca854fbae9202c0d338ed, type: 3}
 --- !u!4 &1599595934 stripped

@@ -1002,6 +1002,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4725758955003554549, guid: 1d9d111a179ca854fbae9202c0d338ed,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7557084657224797164, guid: 1d9d111a179ca854fbae9202c0d338ed,
         type: 3}
       propertyPath: m_Material
@@ -1011,11 +1016,6 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 6200000, guid: 4cd83330d48ed764badb7bdc3c24584c, type: 2}
-    - target: {fileID: 4725758955003554549, guid: 1d9d111a179ca854fbae9202c0d338ed,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d9d111a179ca854fbae9202c0d338ed, type: 3}
 --- !u!1 &499163161
@@ -1226,7 +1226,7 @@ PrefabInstance:
     - target: {fileID: 7557084657224797152, guid: 1d9d111a179ca854fbae9202c0d338ed,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -25.2
+      value: 39.2
       objectReference: {fileID: 0}
     - target: {fileID: 7557084657224797152, guid: 1d9d111a179ca854fbae9202c0d338ed,
         type: 3}
@@ -1293,6 +1293,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: CyberMice (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7557084657224797154, guid: 1d9d111a179ca854fbae9202c0d338ed,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4725758955003554549, guid: 1d9d111a179ca854fbae9202c0d338ed,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 154407403, guid: 1d9d111a179ca854fbae9202c0d338ed, type: 3}
       propertyPath: m_Material
       value: 
@@ -1301,6 +1311,11 @@ PrefabInstance:
         type: 3}
       propertyPath: gearDrop
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7557084657224797167, guid: 1d9d111a179ca854fbae9202c0d338ed,
+        type: 3}
+      propertyPath: maxHealth
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 927083255, guid: 1d9d111a179ca854fbae9202c0d338ed, type: 3}
       propertyPath: m_Size.y
@@ -1327,11 +1342,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4725758955003554549, guid: 1d9d111a179ca854fbae9202c0d338ed,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d9d111a179ca854fbae9202c0d338ed, type: 3}
