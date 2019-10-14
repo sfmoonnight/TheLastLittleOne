@@ -1417,8 +1417,38 @@ PrefabInstance:
       propertyPath: enableAD
       value: 
       objectReference: {fileID: 1442211855}
+    - target: {fileID: 4864742077911940737, guid: e6e7f25251c42482da6fcd157594d214,
+        type: 3}
+      propertyPath: foreArmCoeffD
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864742077911940737, guid: e6e7f25251c42482da6fcd157594d214,
+        type: 3}
+      propertyPath: bodyCollider
+      value: 
+      objectReference: {fileID: 858091317}
+    - target: {fileID: 4864742077911940737, guid: e6e7f25251c42482da6fcd157594d214,
+        type: 3}
+      propertyPath: maxRotateSpeedFore
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864742077911940737, guid: e6e7f25251c42482da6fcd157594d214,
+        type: 3}
+      propertyPath: maxRotateSpeedUpper
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 264251462, guid: e6e7f25251c42482da6fcd157594d214, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6e7f25251c42482da6fcd157594d214, type: 3}
+--- !u!70 &858091317 stripped
+CapsuleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 1063222504, guid: e6e7f25251c42482da6fcd157594d214,
+    type: 3}
+  m_PrefabInstance: {fileID: 858091316}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &899282959
 GameObject:
   m_ObjectHideFlags: 0

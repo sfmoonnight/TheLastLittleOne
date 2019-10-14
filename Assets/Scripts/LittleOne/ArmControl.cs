@@ -5,18 +5,27 @@ using UnityEngine;
 public class ArmControl : MonoBehaviour
 {
     public Camera camera;
-
+    public GameObject body; // not in use
     public GameObject foreArm;
     public GameObject upperArm;
     public JointMotor2D motorUpper;
     public JointMotor2D motorFore;
     public HingeJoint2D hingeJointUpper;
     public HingeJoint2D hingeJointFore;
-    public float maxRotateSpeed;
+    public float maxRotateSpeedFore;
+    public float maxRotateSpeedUpper;
+    public float foreArmCoeffD; // not in use
+    public Collider2D bodyCollider;
+
+    bool armDiverging = false;
+    Vector2 currMouseWorldPos;
+    Queue<float> foreArmErrorQueue;
 
     // Start is called before the first frame update
     void Start()
     {
+        foreArmErrorQueue = new Queue<float>();
+        currMouseWorldPos = GetMousePosition();
         motorUpper = hingeJointUpper.motor;
         motorFore = hingeJointFore.motor;
         motorUpper.motorSpeed = 0;
@@ -30,8 +39,19 @@ public class ArmControl : MonoBehaviour
         {
             return;
         }
-        PidForeArm();
-        PidUpperArm();
+        if (MousePositionValid())
+        {
+
+            PidForeArm();
+            PidUpperArm();
+        }
+        else
+        {
+            motorUpper.motorSpeed = 0;
+            motorFore.motorSpeed = 0;
+            hingeJointFore.motor = motorFore;
+            hingeJointUpper.motor = motorUpper;
+        }
     }
 
     Vector2 GetMousePosition()
@@ -39,6 +59,34 @@ public class ArmControl : MonoBehaviour
         Vector2 mousePos = Input.mousePosition;
         Vector2 mouseWorldPos = camera.ScreenToWorldPoint(Input.mousePosition);
         return mouseWorldPos;
+    }
+
+    bool MousePositionValid()
+    {
+        // Disable arm control if mouse if on top of robot body
+        Vector2 mouseWorldPos = GetMousePosition();
+        Collider2D[] col = Physics2D.OverlapPointAll(mouseWorldPos);
+        //print("Collider length " + col.Length);
+        if (col.Length > 0)
+        {
+            foreach (Collider2D c in col)
+            {
+                if (c.name == bodyCollider.gameObject.name)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    bool ApproxEqual(Vector2 a, Vector2 b)
+    {
+        if (Mathf.Abs(a.x - b.x) < 0.01 && Mathf.Abs(a.y - b.y) < 0.01)
+        {
+            return true;
+        }
+        return false;
     }
 
     void PidForeArm()
@@ -49,14 +97,53 @@ public class ArmControl : MonoBehaviour
          */
 
         Vector2 mouseWorldPos = GetMousePosition();
+        /*if (!ApproxEqual(currMouseWorldPos, mouseWorldPos))
+        {
+            print("Mouse has moved " + currMouseWorldPos + "," + mouseWorldPos);
+            armDiverging = false;
+        }
+
+        if (armDiverging)
+        {
+            motorFore.motorSpeed = 0;
+            hingeJointFore.motor = motorFore;
+            return;
+        }*/
+
         Vector2 forearmPos = foreArm.transform.position;
+        Vector2 upperarmPos = upperArm.transform.position;
 
         // This line differs between fore arm and upper arm
-        Vector2 expectedDirection = (mouseWorldPos - forearmPos).normalized;
+        Vector2 expectedDirection = (mouseWorldPos - upperarmPos).normalized;
 
         Vector2 currentDirection = foreArm.transform.up;
         float deltaAngle = Vector2.SignedAngle(currentDirection, expectedDirection);
-        float rotateSpeed = -maxRotateSpeed * deltaAngle;
+        
+        float rotateSpeed = -maxRotateSpeedFore * deltaAngle;
+
+        /*foreArmErrorQueue.Enqueue(deltaAngle);
+        if (foreArmErrorQueue.Count > 1)
+        {
+            // This section implements a D component for PID
+            float pastError = foreArmErrorQueue.Dequeue();
+            float derivative = deltaAngle - pastError;
+            if (derivative != 0)
+            {
+                print("In derivaterm term " + derivative);
+                rotateSpeed += foreArmCoeffD * derivative;
+            }
+
+            
+            //Code below should be safe to delte
+            if (Mathf.Abs(deltaAngle) - Mathf.Abs(pastError) > 2)
+            {
+                print("Setting diverging to true");
+                currMouseWorldPos = mouseWorldPos;
+                armDiverging = true;
+                rotateSpeed = 0;
+                foreArmErrorQueue.Clear();
+            }
+        }*/
 
         motorFore.motorSpeed = rotateSpeed;
         hingeJointFore.motor = motorFore;
@@ -75,7 +162,11 @@ public class ArmControl : MonoBehaviour
 
         Vector2 currentDirection = upperArm.transform.up;
         float deltaAngle = Vector2.SignedAngle(currentDirection, expectedDirection);
-        float rotateSpeed = -maxRotateSpeed * deltaAngle;
+        print("Delta angle " + deltaAngle);
+        float rotateSpeed = -maxRotateSpeedUpper * deltaAngle;
+        //if (Mathf.Abs(deltaAngle) < 10) {
+        //    rotateSpeed = 0;
+        //}
 
         motorUpper.motorSpeed = rotateSpeed;
         hingeJointUpper.motor = motorUpper;
