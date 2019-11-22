@@ -9,6 +9,8 @@ public class CharacterMovement : MonoBehaviour
     public float speed;
     public bool onGround;
     public Toggle enableAD;
+
+    StateManager stateManager = Toolbox.GetInstance().GetStateManager();
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +20,7 @@ public class CharacterMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (StateManager.GetTmpState().preventGameInput)
+        if (stateManager.GetTmpState().preventGameInput)
         {
             return;
         }

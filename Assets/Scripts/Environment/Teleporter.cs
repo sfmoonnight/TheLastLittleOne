@@ -15,6 +15,7 @@ public class Teleporter : MonoBehaviour
     
     public string identity;
 
+    StateManager stateManager = Toolbox.GetInstance().GetStateManager();
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +24,7 @@ public class Teleporter : MonoBehaviour
             GetComponent<Animator>().SetTrigger("visited");
         }
 
-        string startSpot = StateManager.GetTmpState().loadSpot;
+        string startSpot = stateManager.GetTmpState().loadSpot;
         if (startSpot.Length > 0)
         {
             GameObject pod = GameObject.Find(startSpot + "Pod");
@@ -58,7 +59,7 @@ public class Teleporter : MonoBehaviour
 
     void Refresh()
     {
-        GameState gs = StateManager.GetGameState();
+        GameState gs = stateManager.GetGameState();
 
         Button[] buttons = gameObject.GetComponentsInChildren<Button>();
         foreach (Button b in buttons)
@@ -85,13 +86,13 @@ public class Teleporter : MonoBehaviour
     void Enable()
     {
         gameObject.GetComponent<Animator>().SetTrigger("enable");
-        GameState gs = StateManager.GetGameState();
+        GameState gs = stateManager.GetGameState();
         gs.GetType().GetField(identity).SetValue(gs, true);
     }
 
     bool IsEnabled()
     {
-        GameState gs = StateManager.GetGameState();
+        GameState gs = stateManager.GetGameState();
         bool enabled = (bool)gs.GetType().GetField(identity).GetValue(gs);
         return enabled;
     }
@@ -106,7 +107,7 @@ public class Teleporter : MonoBehaviour
         cg.interactable = true;
         cg.blocksRaycasts = true;
         activated = true;
-        StateManager.GetTmpState().preventGameInput = true;
+        stateManager.GetTmpState().preventGameInput = true;
     }
 
     void Deactivate()
@@ -116,7 +117,7 @@ public class Teleporter : MonoBehaviour
         cg.blocksRaycasts = false;
         cg.interactable = false;
         activated = false;
-        StateManager.GetTmpState().preventGameInput = false;
+        stateManager.GetTmpState().preventGameInput = false;
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -145,7 +146,7 @@ public class Teleporter : MonoBehaviour
     public void Teleport(string destination)
     {
         Deactivate();
-        StateManager.Teleport(destination);
+        stateManager.Teleport(destination);
     }
 
 }

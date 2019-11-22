@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class DeadZone : Damage
 {
+    StateManager stateManager = Toolbox.GetInstance().GetStateManager();
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
-        damage = StateManager.GetGameState().maxHealth + 1;
+        damage = stateManager.GetGameState().maxHealth + 1;
     }
 
     // Update is called once per frame

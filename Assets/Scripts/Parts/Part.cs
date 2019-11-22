@@ -12,6 +12,8 @@ public class Part : MonoBehaviour
 
     public bool activated;
 
+    public EnergyManager energyManager = Toolbox.GetInstance().GetEnergyManager();
+
     // Start is called before the first frame update
     public virtual void Start()
     {
@@ -54,6 +56,6 @@ public class Part : MonoBehaviour
 
     public virtual void ConsumeEnergy()
     {
-        GameManager.armEnergy -= energyCost;
+        energyManager.armEnergy -= energyCost;
     }
 }

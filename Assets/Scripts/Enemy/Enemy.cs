@@ -18,8 +18,8 @@ public class Enemy : MonoBehaviour
 
     GameObject upperArm;
     Vector2 startingScale;
-    
 
+    StateManager stateManager = Toolbox.GetInstance().GetStateManager();
     // Start is called before the first frame update
     public virtual void Start()
     {
@@ -87,7 +87,7 @@ public class Enemy : MonoBehaviour
 
     public virtual void DropGears()
     {
-        StateManager.ChangeGearNumber(gearDrop);
+        stateManager.ChangeGearNumber(gearDrop);
     }
 
     public void InactivateAllColliders()

@@ -21,6 +21,7 @@ public class ArmControl : MonoBehaviour
     Vector2 currMouseWorldPos;
     Queue<float> foreArmErrorQueue;
 
+    StateManager stateManager = Toolbox.GetInstance().GetStateManager();
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +36,7 @@ public class ArmControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (StateManager.GetTmpState().preventGameInput)
+        if (stateManager.GetTmpState().preventGameInput)
         {
             return;
         }

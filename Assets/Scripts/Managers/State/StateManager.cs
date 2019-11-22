@@ -5,7 +5,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine.SceneManagement;
 
-public static class StateManager
+public class StateManager
 {
     public static string savePath = Application.persistentDataPath;
     static GameState gameState = new GameState();
@@ -13,22 +13,22 @@ public static class StateManager
     public static int slot = 0;
     static TeleportConfig teleportConfig = new TeleportConfig();
 
-    public static TeleportConfig GetTelePortConfig()
+    public TeleportConfig GetTelePortConfig()
     {
         return teleportConfig;
     }
 
-    public static TmpState GetTmpState()
+    public TmpState GetTmpState()
     {
         return tmpState;
     }
 
-    public static GameState GetGameState()
+    public GameState GetGameState()
     {
         return gameState;
     }
 
-    public static void Teleport(string teleporterName)
+    public void Teleport(string teleporterName)
     {
         string sceneName = GetTelePortConfig().mapping[teleporterName];
         GetTmpState().loadSpot = teleporterName;
@@ -37,12 +37,12 @@ public static class StateManager
         SceneManager.LoadScene(sceneName);
     }
 
-    public static void ChangeGearNumber(int gears)
+    public void ChangeGearNumber(int gears)
     {
         GetGameState().gears += gears;
     }
 
-    public static void LoadState()
+    public void LoadState()
     {
         if (File.Exists(savePath))
         {
@@ -59,7 +59,7 @@ public static class StateManager
         }
     }
 
-    public static void SaveState()
+    public void SaveState()
     {
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream stream = new FileStream(GetSavePath(), FileMode.Create);
@@ -67,12 +67,12 @@ public static class StateManager
         stream.Close();
     }
 
-    public static string GetSavePath()
+    public string GetSavePath()
     {
         return savePath + "/save" + slot + ".tllo";
     }
 
-    public static void SetSlot(int s)
+    public void SetSlot(int s)
     {
         slot = s;
     }

@@ -18,19 +18,19 @@ public class LightSaber : Weapon
     public override void Update()
     {
         base.Update();
-        if(GameManager.armEnergy <= 0)
+        if(energyManager.armEnergy <= 0)
         {
             DeactivatePart();
         }
     }
     public override void ActivatePart()
     {
-        if(GameManager.armEnergy > 10)
+        if(energyManager.armEnergy > 10)
         {
             base.ActivatePart();
             lightSaberSprite.SetActive(true);
             InvokeRepeating("ConsumeEnergy", 0, 0.1f);
-            GameManager.recoverEnergy = false;
+            energyManager.recoverEnergy = false;
         }
     }
 
@@ -39,7 +39,7 @@ public class LightSaber : Weapon
         base.DeactivatePart();
         lightSaberSprite.SetActive(false);
         CancelInvoke("ConsumeEnergy");
-        GameManager.recoverEnergy = true;
+        energyManager.recoverEnergy = true;
     }
 
     void OnTriggerEnter2D(Collider2D other)
