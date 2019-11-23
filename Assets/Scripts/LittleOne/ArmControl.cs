@@ -21,16 +21,18 @@ public class ArmControl : MonoBehaviour
     Vector2 currMouseWorldPos;
     Queue<float> foreArmErrorQueue;
 
-    StateManager stateManager = Toolbox.GetInstance().GetStateManager();
+    StateManager stateManager;
     // Start is called before the first frame update
     void Start()
     {
+        stateManager = Toolbox.GetInstance().GetStateManager();
         foreArmErrorQueue = new Queue<float>();
         currMouseWorldPos = GetMousePosition();
         motorUpper = hingeJointUpper.motor;
         motorFore = hingeJointFore.motor;
         motorUpper.motorSpeed = 0;
         motorFore.motorSpeed = 0;
+
     }
 
     // Update is called once per frame
@@ -163,7 +165,7 @@ public class ArmControl : MonoBehaviour
 
         Vector2 currentDirection = upperArm.transform.up;
         float deltaAngle = Vector2.SignedAngle(currentDirection, expectedDirection);
-        print("Delta angle " + deltaAngle);
+        //print("Delta angle " + deltaAngle);
         float rotateSpeed = -maxRotateSpeedUpper * deltaAngle;
         //if (Mathf.Abs(deltaAngle) < 10) {
         //    rotateSpeed = 0;

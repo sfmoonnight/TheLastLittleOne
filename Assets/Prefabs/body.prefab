@@ -120,6 +120,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -165,7 +166,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.09, y: 1.7}
@@ -231,7 +232,6 @@ GameObject:
   - component: {fileID: 4864742077183700564}
   - component: {fileID: 4864742077183700553}
   - component: {fileID: 4864742077183700566}
-  - component: {fileID: 4864742077183700567}
   - component: {fileID: 4864742077183700555}
   m_Layer: 8
   m_Name: body
@@ -274,6 +274,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -428,24 +429,6 @@ PolygonCollider2D:
       - {x: 0.34482956, y: -1.2123413}
       - {x: 0.41424656, y: -1.1332498}
       - {x: 0.4617815, y: -1.088562}
---- !u!114 &4864742077183700567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4864742077183700562}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 786485ca0cfbd40588cdd4a0d9176e82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 0
-  maxArmEnergy: 0
-  energyBarMask: {fileID: 4864742077915379933}
-  energyBar: {fileID: 4864742078983883256}
-  energyRecovery: 1
-  energyBarMaxDistance: 3.62
 --- !u!114 &4864742077183700555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -536,6 +519,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -773,6 +757,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -893,7 +878,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: -0.56}
-  m_ConnectedAnchor: {x: 0, y: 0.87000036}
+  m_ConnectedAnchor: {x: 0, y: 0.8700001}
   m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 0
@@ -915,12 +900,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 4864742078168619837}
+  body: {fileID: 0}
   foreArm: {fileID: 4864742078057374115}
   upperArm: {fileID: 4864742077911940749}
   hingeJointUpper: {fileID: 4864742077911940736}
   hingeJointFore: {fileID: 4864742078057374119}
-  maxRotateSpeed: 9
-  bodyCollider: {fileID: 264251462}
+  maxRotateSpeedFore: 20
+  maxRotateSpeedUpper: 0
+  foreArmCoeffD: -20
+  bodyCollider: {fileID: 1063222504}
 --- !u!1 &4864742077915379933
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,7 +920,7 @@ GameObject:
   - component: {fileID: 4864742077915379932}
   - component: {fileID: 4864742077915379935}
   m_Layer: 8
-  m_Name: EnergyBarMask
+  m_Name: ArmEnergyBarMask
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -966,6 +954,7 @@ SpriteMask:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1056,6 +1045,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1188,7 +1178,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0.06, y: -0.91}
-  m_ConnectedAnchor: {x: -0.020004272, y: 0.6499996}
+  m_ConnectedAnchor: {x: -0.019996643, y: 0.64999986}
   m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 0
@@ -1213,6 +1203,7 @@ MonoBehaviour:
   tipColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   energyCost: 15
   activated: 0
+  energyManager: {fileID: 0}
   force: 300
   tip: {fileID: 4864742078342048444}
 --- !u!114 &4864742078057374117
@@ -1231,6 +1222,7 @@ MonoBehaviour:
   tipColor: {r: 1, g: 1, b: 1, a: 1}
   energyCost: 0
   activated: 0
+  energyManager: {fileID: 0}
   damage: 0
   bullet: {fileID: 8231167661598322573, guid: e013d21ed4e934cb09cb7a3e692f1432, type: 3}
   instantiatePoint: {fileID: 4864742078342048444}
@@ -1250,6 +1242,7 @@ MonoBehaviour:
   tipColor: {r: 1, g: 1, b: 1, a: 0}
   energyCost: 1
   activated: 0
+  energyManager: {fileID: 0}
   damage: 0
   lightSaberSprite: {fileID: 6511391315636631711}
 --- !u!114 &4864742078057374043
@@ -1268,6 +1261,7 @@ MonoBehaviour:
   tipColor: {r: 1, g: 1, b: 1, a: 0}
   energyCost: 0
   activated: 0
+  energyManager: {fileID: 0}
   shieldSprite: {fileID: 4864742077899433300}
 --- !u!1 &4864742078168619832
 GameObject:
@@ -1430,6 +1424,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1593,6 +1588,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1673,6 +1669,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1720,7 +1717,7 @@ GameObject:
   - component: {fileID: 4864742078983883261}
   - component: {fileID: 4864742078983883258}
   m_Layer: 8
-  m_Name: EnergyBar
+  m_Name: ArmEnergyBar
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1760,6 +1757,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1855,6 +1853,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

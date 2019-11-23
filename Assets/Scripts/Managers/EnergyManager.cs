@@ -23,6 +23,7 @@ public class EnergyManager : MonoBehaviour
         stateManager = Toolbox.GetInstance().GetStateManager();
         armEnergy = stateManager.GetGameState().maxArmEnergy;
         energyBarUI = GameObject.Find("EnergyBarUI");
+        //print(energyBarUI);
         armEnergyBar = GameObject.Find("ArmEnergyBar");
         armEnergyBarMask = GameObject.Find("ArmEnergyBarMask");
 
@@ -35,7 +36,8 @@ public class EnergyManager : MonoBehaviour
     void Update()
     {
         energyBarUI.GetComponent<Image>().fillAmount = armEnergy / stateManager.GetGameState().maxArmEnergy;
-        
+        //print(energyBarUI);
+        //print(stateManager);
     }
 
     public void EnergyRecovery()
@@ -49,6 +51,8 @@ public class EnergyManager : MonoBehaviour
             }
 
             //energyBar.transform.localScale = energyBarInitScale * (armEnergy / armEnergyMax);
+            //print(stateManager);
+            //print(armEnergyBarMask);
             armEnergyBarMask.transform.localPosition = new Vector3(((stateManager.GetGameState().maxArmEnergy - armEnergy) / stateManager.GetGameState().maxArmEnergy) * energyBarMaxDistance, 0, 0);
         }
     }

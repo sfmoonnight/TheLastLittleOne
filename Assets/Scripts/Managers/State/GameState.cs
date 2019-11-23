@@ -16,8 +16,8 @@ public class GameState
     public bool tele3 = true;
 
     public string sceneName;
-    public int x;
-    public int y;
+    public float x;
+    public float y;
 
     //---Upgrade
     public float maxHealth = 100;

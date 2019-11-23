@@ -12,12 +12,12 @@ public class Part : MonoBehaviour
 
     public bool activated;
 
-    public EnergyManager energyManager = Toolbox.GetInstance().GetEnergyManager();
+    public EnergyManager energyManager;
 
     // Start is called before the first frame update
     public virtual void Start()
     {
-        
+        energyManager = Toolbox.GetInstance().GetEnergyManager();
     }
 
     // Update is called once per frame

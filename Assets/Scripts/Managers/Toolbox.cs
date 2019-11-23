@@ -33,7 +33,7 @@ public class Toolbox : MonoBehaviour
         var go = new GameObject("Managers");
         DontDestroyOnLoad(go);
         this.gameManager = go.AddComponent<GameManager>();
-        //this.statManager = go.AddComponent<StatManager>();
+        this.stateManager = go.AddComponent<StateManager>();
         this.energyManager = go.AddComponent<EnergyManager>();
     }
 

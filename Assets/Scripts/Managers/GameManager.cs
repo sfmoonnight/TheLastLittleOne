@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         
         
         forearm = GameObject.Find("forearm");
-        littleOne = gameObject;
+        littleOne = GameObject.Find("body");
         /*
         foreach(Part part in forearm.GetComponents<Part>())
         {
@@ -226,8 +226,13 @@ public class GameManager : MonoBehaviour
         GameObject checkPoint = GameObject.Find("checkpoint");
         yield return new WaitForSeconds(time);
         littleOne.transform.position = checkPoint.transform.position;
+        //print(checkPoint.transform.position);
+        //print(littleOne.transform.position);
+
+
         health = stateManager.GetGameState().maxHealth;
         energyManager.ResetEnergy();
+        //stateManager.SaveState();
         EventManager.TriggerReload();
     }
 }

@@ -15,10 +15,11 @@ public class Teleporter : MonoBehaviour
     
     public string identity;
 
-    StateManager stateManager = Toolbox.GetInstance().GetStateManager();
+    StateManager stateManager;
     // Start is called before the first frame update
     void Start()
     {
+        stateManager = Toolbox.GetInstance().GetStateManager();
         if (IsEnabled())
         {
             GetComponent<Animator>().SetTrigger("visited");
@@ -31,6 +32,7 @@ public class Teleporter : MonoBehaviour
             Vector3 podPos = pod.transform.position;
             GameObject.Find("body").transform.position = podPos;
         }
+
     }
 
     // Update is called once per frame
@@ -92,7 +94,9 @@ public class Teleporter : MonoBehaviour
 
     bool IsEnabled()
     {
+        //print(stateManager);
         GameState gs = stateManager.GetGameState();
+
         bool enabled = (bool)gs.GetType().GetField(identity).GetValue(gs);
         return enabled;
     }

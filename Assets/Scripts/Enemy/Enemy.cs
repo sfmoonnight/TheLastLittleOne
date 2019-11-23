@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
     GameObject upperArm;
     Vector2 startingScale;
 
-    StateManager stateManager = Toolbox.GetInstance().GetStateManager();
+    StateManager stateManager;
     // Start is called before the first frame update
     public virtual void Start()
     {
@@ -27,6 +27,8 @@ public class Enemy : MonoBehaviour
         spawningpoint = transform.position;
         startingScale = transform.localScale;
         upperArm = GameObject.Find("UpperArm");
+
+        stateManager = Toolbox.GetInstance().GetStateManager();
 
         if (healthBarImage)
         {

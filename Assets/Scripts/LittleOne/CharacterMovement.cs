@@ -10,11 +10,12 @@ public class CharacterMovement : MonoBehaviour
     public bool onGround;
     public Toggle enableAD;
 
-    StateManager stateManager = Toolbox.GetInstance().GetStateManager();
+    StateManager stateManager;
     // Start is called before the first frame update
     void Start()
     {
         character = GetComponent<Rigidbody2D>();
+        stateManager = Toolbox.GetInstance().GetStateManager();
     }
 
     // Update is called once per frame

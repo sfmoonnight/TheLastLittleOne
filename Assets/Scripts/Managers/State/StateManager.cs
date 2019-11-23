@@ -5,13 +5,25 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine.SceneManagement;
 
-public class StateManager
+public class StateManager : MonoBehaviour
 {
-    public static string savePath = Application.persistentDataPath;
+    public static string savePath;
     static GameState gameState = new GameState();
     static TmpState tmpState = new TmpState();
     public static int slot = 0;
     static TeleportConfig teleportConfig = new TeleportConfig();
+    GameObject character;
+
+    public void Start()
+    {
+        character = GameObject.Find("body");
+        LoadState();
+    }
+
+    public void Awake()
+    {
+        savePath = Application.persistentDataPath;
+    }
 
     public TeleportConfig GetTelePortConfig()
     {
@@ -44,12 +56,15 @@ public class StateManager
 
     public void LoadState()
     {
-        if (File.Exists(savePath))
+        print("Loading saved file");
+        if (File.Exists(GetSavePath()))
         {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(GetSavePath(), FileMode.Open);
             gameState = formatter.Deserialize(stream) as GameState;
             stream.Close();
+
+            character.transform.position = new Vector2(gameState.x, gameState.y);
         }
         else
         {
@@ -61,10 +76,23 @@ public class StateManager
 
     public void SaveState()
     {
+
+        gameState.x = character.transform.position.x;
+        gameState.y = character.transform.position.y;
+
         BinaryFormatter formatter = new BinaryFormatter();
-        FileStream stream = new FileStream(GetSavePath(), FileMode.Create);
+        string sp = GetSavePath();
+        print("Saving to: " + sp);
+        FileStream stream = new FileStream(sp, FileMode.Create);
         formatter.Serialize(stream, gameState);
         stream.Close();
+    }
+
+    void OnApplicationQuit()
+    {
+        print("Application about to quit");
+
+        SaveState();
     }
 
     public string GetSavePath()
