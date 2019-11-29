@@ -23,8 +23,13 @@ public class LaserGunBullet : Weapon
             Destroy(gameObject);
         }
 
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("EnemyHitbox"))
         {
+            Enemy enemy = collision.GetComponentInParent<Enemy>();
+            if (enemy.health > 0)
+            {
+                enemy.TakeDamage(damage);
+            }
             Destroy(gameObject);
         }
     }

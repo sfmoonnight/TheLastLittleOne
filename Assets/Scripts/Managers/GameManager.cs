@@ -15,8 +15,8 @@ public class GameManager : MonoBehaviour
     public static List<Part> parts = new List<Part>();
     public static Part currentPart;
     public static int currentPartIndex;
-    
 
+    public Type currentType;
     public float maxHealth;
     public static float health;
     public float maxArmEnergy;
@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
         
         forearm = GameObject.Find("forearm");
         littleOne = GameObject.Find("body");
+
+        
         /*
         foreach(Part part in forearm.GetComponents<Part>())
         {
@@ -51,7 +53,9 @@ public class GameManager : MonoBehaviour
         /*currentPartIndex = 0;
         ActivatePart();*/
         ActivatePart<Repulser>();
-        ActivatePart<LaserGun>();    
+        ActivatePart<LaserGun>();
+
+        currentPart = forearm.GetComponent<LaserGun>();
     }
 
     // Update is called once per frame
@@ -99,7 +103,7 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            //DeactivatePart<LaserGun>();
+            DeactivatePart<LaserGun>();
             DeactivatePart<LightSaber>();
             DeactivatePart<Repulser>();
             ActivatePart<EnergyShield>();
@@ -122,10 +126,16 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            //ActuatePart<LaserGun>();
             DeactivatePart<Repulser>();
             DeactivatePart<EnergyShield>();
-            ActivatePart<LightSaber>();
+            
+            if(currentPart.partName == "lightsaber")
+            {
+                ActivatePart<LightSaber>();
+            }else if(currentPart.partName == "lasergun")
+            {
+                ActuatePart<LaserGun>();
+            }
 
         }
 
@@ -217,6 +227,11 @@ public class GameManager : MonoBehaviour
         {
             part.DeactivatePart();
         }
+    }
+
+    public void SwitchPart(Part p)
+    {
+        currentPart = p;
     }
 
 

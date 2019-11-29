@@ -25,6 +25,7 @@ public class LaserGun : Weapon
         if (activated)
         {
             Instantiate(bullet, instantiatePoint.transform.position, instantiatePoint.transform.rotation);
+            ConsumeEnergy();
         }
     }
 }
