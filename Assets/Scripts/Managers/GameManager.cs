@@ -229,9 +229,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SwitchPart(Part p)
+    public void SwitchPart(String pname)
     {
-        currentPart = p;
+        if(pname == "lasergun")
+        {
+            currentPart = forearm.GetComponent<LaserGun>();
+        }
+        if (pname == "lightsaber")
+        {
+            currentPart = forearm.GetComponent<LightSaber>();
+        }
     }
 
 

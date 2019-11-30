@@ -10,6 +10,7 @@ public class LaserGun : Weapon
     // Start is called before the first frame update
     void Start()
     {
+        base.Start();
         partName = "lasergun";
         tipColor = Color.white;
     }
@@ -22,7 +23,7 @@ public class LaserGun : Weapon
 
     public override void Actuate()
     {
-        if (activated)
+        if (activated && energyManager.armEnergy > 10)
         {
             Instantiate(bullet, instantiatePoint.transform.position, instantiatePoint.transform.rotation);
             ConsumeEnergy();

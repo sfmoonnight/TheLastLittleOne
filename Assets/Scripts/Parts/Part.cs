@@ -57,6 +57,9 @@ public class Part : MonoBehaviour
     public virtual void ConsumeEnergy()
     {
         //print(energyManager);
-        Toolbox.GetInstance().GetEnergyManager().armEnergy -= energyCost;
+        if(energyManager.armEnergy > energyCost)
+        {
+            energyManager.armEnergy -= energyCost;
+        }  
     }
 }
