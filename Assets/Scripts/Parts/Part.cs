@@ -14,10 +14,15 @@ public class Part : MonoBehaviour
 
     public EnergyManager energyManager;
 
+    public virtual void Awake()
+    {
+        energyManager = Toolbox.GetInstance().GetEnergyManager();
+    }
+
     // Start is called before the first frame update
     public virtual void Start()
     {
-        energyManager = Toolbox.GetInstance().GetEnergyManager();
+        
     }
 
     // Update is called once per frame

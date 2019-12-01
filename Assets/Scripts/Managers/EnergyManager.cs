@@ -21,8 +21,8 @@ public class EnergyManager : MonoBehaviour
     void Start()
     {
         stateManager = Toolbox.GetInstance().GetStateManager();
-        armEnergy = stateManager.GetGameState().maxArmEnergy;
-        energyBarUI = GameObject.Find("EnergyBarUI");
+        armEnergy = GameState.maxArmEnergy;
+        //energyBarUI = GameObject.Find("EnergyBarUI");
         //print(energyBarUI);
         armEnergyBar = GameObject.Find("ArmEnergyBar");
         armEnergyBarMask = GameObject.Find("ArmEnergyBarMask");
@@ -35,30 +35,36 @@ public class EnergyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        energyBarUI.GetComponent<Image>().fillAmount = armEnergy / stateManager.GetGameState().maxArmEnergy;
+        energyBarUI.GetComponent<Image>().fillAmount = armEnergy / GameState.maxArmEnergy;
         //print(energyBarUI);
         //print(stateManager);
+    }
+
+    public void SetUpEnergy(GameObject eUI, GameObject eMask)
+    {
+        energyBarUI = eUI;
+        armEnergyBarMask = eMask;
     }
 
     public void EnergyRecovery()
     {
         if (recoverEnergy)
         {
-            if (armEnergy < stateManager.GetGameState().maxArmEnergy)
+            if (armEnergy < GameState.maxArmEnergy)
             {
                 armEnergy += energyRecovery;
-                Mathf.Clamp(armEnergy, 0, stateManager.GetGameState().maxArmEnergy);
+                Mathf.Clamp(armEnergy, 0, GameState.maxArmEnergy);
             }
 
             //energyBar.transform.localScale = energyBarInitScale * (armEnergy / armEnergyMax);
             //print(stateManager);
             //print(armEnergyBarMask);
-            armEnergyBarMask.transform.localPosition = new Vector3(((stateManager.GetGameState().maxArmEnergy - armEnergy) / stateManager.GetGameState().maxArmEnergy) * energyBarMaxDistance, 0, 0);
+            armEnergyBarMask.transform.localPosition = new Vector3(((GameState.maxArmEnergy - armEnergy) / GameState.maxArmEnergy) * energyBarMaxDistance, 0, 0);
         }
     }
 
     public void ResetEnergy()
     {
-        armEnergy = stateManager.GetGameState().maxArmEnergy;
+        armEnergy = GameState.maxArmEnergy;
     }
 }

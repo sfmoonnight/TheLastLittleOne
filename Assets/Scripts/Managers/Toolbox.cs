@@ -20,6 +20,7 @@ public class Toolbox : MonoBehaviour
     /* Add your managers here */
     private GameManager gameManager;
     private StateManager stateManager;
+   
     private EnergyManager energyManager;
 
     void Awake()
@@ -31,9 +32,12 @@ public class Toolbox : MonoBehaviour
         }
 
         var go = new GameObject("Managers");
+        
         DontDestroyOnLoad(go);
+       
         this.gameManager = go.AddComponent<GameManager>();
         this.stateManager = go.AddComponent<StateManager>();
+        
         this.energyManager = go.AddComponent<EnergyManager>();
     }
 
@@ -52,5 +56,10 @@ public class Toolbox : MonoBehaviour
     {
         return this.energyManager;
     }
+
+    /*public GameState GetGameState()
+    {
+        return this.gameState;
+    }*/
 }
 

@@ -5,6 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class GameState
 {
+    //---Robot
+    public float energy;
+    public float health;
+    public string currentPart;
     //---Resource
     public int gears = 0;
 
@@ -20,7 +24,7 @@ public class GameState
     public float y;
 
     //---Upgrade
-    public float maxHealth = 100;
+    public static float maxHealth = 100;
     public int level = 1;
-    public float maxArmEnergy = 100;
+    public static float maxArmEnergy = 100;
 }

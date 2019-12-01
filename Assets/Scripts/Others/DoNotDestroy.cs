@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeadZone : Damage
+public class DoNotDestroy : MonoBehaviour
 {
     // Start is called before the first frame update
-    public override void Start()
+    void Start()
     {
-        base.Start();
-        damage = GameState.maxHealth + 1;
+        DontDestroyOnLoad(this);
     }
 
     // Update is called once per frame
-    public override void Update()
+    void Update()
     {
-        base.Update();
+        
     }
 }

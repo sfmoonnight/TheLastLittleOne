@@ -8,36 +8,45 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     GameObject healthBarUI;
-    GameObject forearm;
-
-    public static GameObject littleOne;
+    public GameObject forearm;
+    
+    public GameObject littleOne;
 
     public static List<Part> parts = new List<Part>();
-    public static Part currentPart;
+    
     public static int currentPartIndex;
 
-    public Type currentType;
+    public Part currentPart;
+    
     public float maxHealth;
     public static float health;
     public float maxArmEnergy;
 
-    StateManager stateManager;
+    public StateManager stateManager;
     EnergyManager energyManager;
 
+    void Awake()
+    {
+        
+    }
     // Start is called before the first frame update
     void Start()
     {
+        //print("gamemanager=====================================");
         healthBarUI = GameObject.Find("HealthBarUI");
 
         stateManager = Toolbox.GetInstance().GetStateManager();
         energyManager = Toolbox.GetInstance().GetEnergyManager();
-        health = stateManager.GetGameState().maxHealth;
-        
-        
-        forearm = GameObject.Find("forearm");
-        littleOne = GameObject.Find("body");
 
+        health = GameState.maxHealth;
+        //forearm = GameObject.Find("forearm");
+        //print("***forearm: " + forearm);
         
+        //print("****current part: " + currentPart);
+        
+        //littleOne = GameObject.Find("body");
+
+        //SwitchPart(currentPart.partName);
         /*
         foreach(Part part in forearm.GetComponents<Part>())
         {
@@ -49,19 +58,19 @@ public class GameManager : MonoBehaviour
         */
 
         //print(parts.Count);
-        DeactiveAllParts();
+        //DeactiveAllParts();
         /*currentPartIndex = 0;
         ActivatePart();*/
-        ActivatePart<Repulser>();
-        ActivatePart<LaserGun>();
+        //ActivatePart<Repulser>();
+        //ActivatePart<LaserGun>();
 
-        currentPart = forearm.GetComponent<LaserGun>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        healthBarUI.GetComponent<Image>().fillAmount = health / stateManager.GetGameState().maxHealth;
+        healthBarUI.GetComponent<Image>().fillAmount = health / GameState.maxHealth;
         //print(armEnergy);
         if (stateManager.GetTmpState().preventGameInput) {
             return;
@@ -128,12 +137,14 @@ public class GameManager : MonoBehaviour
         {
             DeactivatePart<Repulser>();
             DeactivatePart<EnergyShield>();
-            
-            if(currentPart.partName == "lightsaber")
+            print("+++++" + currentPart.partName);
+            if (currentPart.partName == "lightsaber")
             {
                 ActivatePart<LightSaber>();
             }else if(currentPart.partName == "lasergun")
             {
+                print("-----activate");
+                ActivatePart<LaserGun>();
                 ActuatePart<LaserGun>();
             }
 
@@ -156,6 +167,14 @@ public class GameManager : MonoBehaviour
         currentPart.enabled = true;
         currentPart.ActivatePart();
     }*/
+
+    public void SetUpGame(GameObject body, GameObject fArm, GameObject hUI)
+    {
+        littleOne = body;
+        forearm = fArm;
+        healthBarUI = hUI;
+        currentPart = forearm.GetComponent<LaserGun>();
+    }
 
     public void UpdateTipColor(Part part)
     {
@@ -194,6 +213,16 @@ public class GameManager : MonoBehaviour
         UpdateTipColor(part);
     }
 
+    public Part GetCurrentPart()
+    {
+        return currentPart;
+    }
+
+    public void SetCurrentPart()
+    {
+        currentPart = forearm.GetComponent<LaserGun>();
+    }
+    
     /*void SwitchWeapon()
     {
         //print("Switch");
@@ -252,9 +281,11 @@ public class GameManager : MonoBehaviour
         //print(littleOne.transform.position);
 
 
-        health = stateManager.GetGameState().maxHealth;
+        health = GameState.maxHealth;
         energyManager.ResetEnergy();
         //stateManager.SaveState();
         EventManager.TriggerReload();
     }
+
+    
 }
