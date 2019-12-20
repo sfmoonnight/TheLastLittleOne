@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     public bool exist;
 
     public GameObject healthBarImage;
+    public GameObject gear;
 
     GameObject upperArm;
     Vector2 startingScale;
@@ -89,7 +90,12 @@ public class Enemy : MonoBehaviour
 
     public virtual void DropGears()
     {
-        stateManager.ChangeGearNumber(gearDrop);
+        //stateManager.ChangeGearNumber(gearDrop);
+        for(int i = 0; i < (gearDrop/10); i++)
+        {
+            Instantiate(gear, transform.position, Quaternion.identity);
+        }
+        
     }
 
     public void InactivateAllColliders()

@@ -27,7 +27,7 @@ public class Damage : MonoBehaviour
     {
         if (other.CompareTag("InteractionCollider"))
         {
-            print(damage);
+            //print(damage);
             GameManager.health -= damage;
         }
     }

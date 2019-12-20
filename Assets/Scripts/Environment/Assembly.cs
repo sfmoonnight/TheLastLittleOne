@@ -9,10 +9,11 @@ public class Assembly : MonoBehaviour
     public TMP_Dropdown options;
     public Canvas menu;
     string interactionColliderTag = "InteractionCollider";
+    StateManager stateManager;
     // Start is called before the first frame update
     void Start()
     {
-        
+        stateManager = Toolbox.GetInstance().GetStateManager();
     }
 
     // Update is called once per frame
@@ -42,14 +43,18 @@ public class Assembly : MonoBehaviour
 
     public void SwitchWeapon()
     {
-        if(options.value == 0)
+        if(stateManager.GetGameState().gears >= 20)
         {
-            Toolbox.GetInstance().GetGameManager().SwitchPart("lasergun");
-        }
-        else if(options.value == 1)
-        {
-            Toolbox.GetInstance().GetGameManager().SwitchPart("lightsaber");
-        }
+            if (options.value == 0)
+            {
+                Toolbox.GetInstance().GetGameManager().SwitchPart("lasergun");
+            }
+            else if (options.value == 1)
+            {
+                Toolbox.GetInstance().GetGameManager().SwitchPart("lightsaber");
+            }
+            stateManager.ChangeGearNumber(-20);
+        }    
     }
 
 

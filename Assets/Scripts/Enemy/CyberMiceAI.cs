@@ -59,10 +59,10 @@ public class CyberMiceAI : EnemyAI
         base.Attack();
         if (attaking && !getHit)
         {
-            print("attacking");
+            //print("attacking");
             float direction = target.transform.position.x - self.transform.position.x;
             Vector2 vector = new Vector2(1 * Mathf.Sign(direction), 1) * self.mass;
-            print(vector);
+            //print(vector);
             self.AddForce(vector * 8, ForceMode2D.Impulse);
         }
     }
